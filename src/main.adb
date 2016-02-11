@@ -1,8 +1,68 @@
 with Ada.Text_IO;
 with Ada.Float_Text_IO;
 with Ada.Numerics.Real_Arrays;
+with Ada.Strings.Fixed;
 
 procedure Main is
+
+   package CBR_Distances is
+      use Ada.Numerics.Real_Arrays;
+      function Deviation_Manhattan (W, A, B : Real_Vector) return Float;
+      function Deviation_Euclidean (W, A, B : Real_Vector) return Float;
+      function Deviation_Canberra (W, A, B : Real_Vector) return Float;
+   end;
+
+   package body CBR_Distances is
+
+      function Deviation_Euclidean (X1, X2 : Float) return Float is
+      begin
+         return (X1 - X2) ** 2;
+      end;
+
+      function Deviation_Manhattan (X1, X2 : Float) return Float is
+      begin
+         return abs (X1 - X2);
+      end;
+
+      function Deviation_Canberra (X1, X2 : Float) return Float is
+      begin
+         if (X1 - X2) = 0.0 then
+            return 0.0;
+         end if;
+         return abs (X1 - X2) / (abs X1 + abs X2);
+      end;
+
+
+
+      function Deviation_Euclidean (W, A, B : Real_Vector) return Float is
+         Sum : Float := 0.0;
+      begin
+         for I in A'Range loop
+            Sum := Sum + W(I) * Deviation_Euclidean (A (I), B (I));
+         end loop;
+         return Sum;
+      end;
+
+      function Deviation_Manhattan (W, A, B : Real_Vector) return Float is
+         Sum : Float := 0.0;
+      begin
+         for I in A'Range loop
+            Sum := Sum + W(I) * Deviation_Manhattan (A (I), B (I));
+         end loop;
+         return Sum;
+      end;
+
+      function Deviation_Canberra (W, A, B : Real_Vector) return Float is
+         Sum : Float := 0.0;
+      begin
+         for I in A'Range loop
+            Sum := Sum + W(I) * Deviation_Canberra (A (I), B (I));
+         end loop;
+         return Sum;
+      end;
+
+   end;
+
 
    package Samples is
       use Ada.Numerics.Real_Arrays;
@@ -12,7 +72,6 @@ procedure Main is
       procedure Read (Name : String; A : Attribute_Type; X : out Sample_Array; Min : out Float; Max : out Float);
       procedure Normalize (A : Attribute_Type; Min, Max : Float; X : in out Sample_Array);
       procedure Put (X : Sample);
-      function Deviation (W, A, B : Real_Vector) return Float;
    end;
 
 
@@ -41,20 +100,6 @@ procedure Main is
             end;
          end loop;
          Close (File);
-      end;
-
-      function Deviation (W, X1, X2 : Float) return Float is
-      begin
-         return W * abs (X1 - X2);
-      end;
-
-      function Deviation (W, A, B : Real_Vector) return Float is
-         Sum : Float := 0.0;
-      begin
-         for I in A'Range loop
-            Sum := Sum + Deviation (W(I), A (I), B (I));
-         end loop;
-         return Sum;
       end;
 
       function Normalize (X : Float; Min : Float; Max : Float) return Float is
@@ -96,14 +141,17 @@ begin
    Normalize (3, Min, Max, X);
 
    -- Print Cases with their respective attributes
-   for I in Sample_Array'Range loop
-      declare
-         use Ada.Text_IO;
-      begin
+   declare
+      use Ada.Text_IO;
+   begin
+      Put_Line ("Sample_Array");
+      for I in Sample_Array'Range loop
          Put (X (I));
          New_Line;
-      end;
-   end loop;
+      end loop;
+      New_Line (2);
+   end;
+
 
 
    -- Calculate deviation between Case 1 and all other cases.
@@ -111,13 +159,31 @@ begin
    declare
       use Ada.Float_Text_IO;
       use Ada.Text_IO;
+      use Ada.Strings.Fixed;
+      use CBR_Distances;
       Sum : Float := 0.0;
    begin
+      Put_Line ("Deviation");
+      Put (Tail ("Manhattan", 12));
+      Put ("|");
+      Put (Tail ("Euclidean", 12));
+      Put ("|");
+      Put (Tail ("Canberra", 12));
+      Put ("|");
+      New_Line;
       for I in Sample_Array'Range loop
-         Sum := Deviation (W, X (1) (1 .. 2), X (I) (1 .. 2));
-         Put (Sum, 2, 2, 0);
+         Sum := Deviation_Manhattan (W, X (1) (1 .. 2), X (I) (1 .. 2));
+         Put (Sum, 4, 7, 0);
+         Put ("|");
+         Sum := Deviation_Euclidean (W, X (1) (1 .. 2), X (I) (1 .. 2));
+         Put (Sum, 4, 7, 0);
+         Put ("|");
+         Sum := Deviation_Canberra (W, X (1) (1 .. 2), X (I) (1 .. 2));
+         Put (Sum, 4, 7, 0);
+         Put ("|");
          New_Line;
       end loop;
+      New_Line (2);
    end;
 
 
