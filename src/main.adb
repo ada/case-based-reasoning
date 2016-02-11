@@ -43,16 +43,16 @@ procedure Main is
       end loop;
    end;
 
-   function Sim(C, S : Float) return Float is
+   function Deviation (C, S : Float) return Float is
    begin
-      return 1.0 - abs(C-S);
+      return abs (C - S);
    end;
 
-   function Sim(W, Case_1, Case_2 : Vector_Attributes) return Float is
+   function Deviation (W, Case_1, Case_2 : Vector_Attributes) return Float is
       Sum : Float := 0.0;
    begin
       for i in Vector_Attributes'First .. Vector_Attributes'Last - 1 loop
-         Sum := Sum + W(i) * Sim(Case_1(i), Case_2(i));
+         Sum := Sum + W(i) * Deviation (Case_1(i), Case_2(i));
       end loop;
       return Sum;
    end;
@@ -81,14 +81,14 @@ begin
    end loop;
 
 
-   -- Calculate similiary between Case 1 and all other cases.
+   -- Calculate deviation between Case 1 and all other cases.
    -- The case with max value is the most similar one.
    declare
       S : Float := 0.0;
    begin
       for i in C'Range loop
          New_Line;
-         S := Sim(W, C(1), C(i));
+         S := Deviation (W, C(1), C(i));
          Put(S, 2, 2, 0);
       end loop;
    end;
