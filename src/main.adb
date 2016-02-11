@@ -10,6 +10,7 @@ procedure Main is
       function Deviation_Manhattan (W, A, B : Real_Vector) return Float;
       function Deviation_Euclidean (W, A, B : Real_Vector) return Float;
       function Deviation_Canberra (W, A, B : Real_Vector) return Float;
+      function Deviation_Mixed (W, A, B : Real_Vector) return Float;
    end;
 
    package body CBR_Distances is
@@ -32,6 +33,13 @@ procedure Main is
          return abs (X1 - X2) / (abs X1 + abs X2);
       end;
 
+      function Deviation_Mixed (X1, X2 : Float) return Float is
+         R : Float;
+      begin
+         R := Deviation_Euclidean (X1, X2) + Deviation_Manhattan (X1, X2) + Deviation_Canberra (X1, X2);
+         R := R / 3.0;
+         return R;
+      end;
 
 
       function Deviation_Euclidean (W, A, B : Real_Vector) return Float is
@@ -40,6 +48,7 @@ procedure Main is
          for I in A'Range loop
             Sum := Sum + W(I) * Deviation_Euclidean (A (I), B (I));
          end loop;
+         Sum := Sum / Float (A'Length);
          return Sum;
       end;
 
@@ -49,6 +58,7 @@ procedure Main is
          for I in A'Range loop
             Sum := Sum + W(I) * Deviation_Manhattan (A (I), B (I));
          end loop;
+         Sum := Sum / Float (A'Length);
          return Sum;
       end;
 
@@ -56,8 +66,19 @@ procedure Main is
          Sum : Float := 0.0;
       begin
          for I in A'Range loop
-            Sum := Sum + W(I) * Deviation_Canberra (A (I), B (I));
+            Sum := Sum + W (I) * Deviation_Canberra (A (I), B (I));
          end loop;
+         Sum := Sum / Float (A'Length);
+         return Sum;
+      end;
+
+      function Deviation_Mixed (W, A, B : Real_Vector) return Float is
+         Sum : Float := 0.0;
+      begin
+         for I in A'Range loop
+            Sum := Sum + W (I) * Deviation_Mixed (A (I), B (I));
+         end loop;
+         Sum := Sum / Float (A'Length);
          return Sum;
       end;
 
@@ -164,14 +185,20 @@ begin
       Sum : Float := 0.0;
    begin
       Put_Line ("Deviation");
+      Put (Tail ("Class", 12));
+      Put ("|");
       Put (Tail ("Manhattan", 12));
       Put ("|");
       Put (Tail ("Euclidean", 12));
       Put ("|");
       Put (Tail ("Canberra", 12));
       Put ("|");
+      Put (Tail ("Mixed", 12));
+      Put ("|");
       New_Line;
       for I in Sample_Array'Range loop
+         Put (X (I) (3), 4, 7, 0);
+         Put ("|");
          Sum := Deviation_Manhattan (W, X (1) (1 .. 2), X (I) (1 .. 2));
          Put (Sum, 4, 7, 0);
          Put ("|");
@@ -179,6 +206,9 @@ begin
          Put (Sum, 4, 7, 0);
          Put ("|");
          Sum := Deviation_Canberra (W, X (1) (1 .. 2), X (I) (1 .. 2));
+         Put (Sum, 4, 7, 0);
+         Put ("|");
+         Sum := Deviation_Mixed (W, X (1) (1 .. 2), X (I) (1 .. 2));
          Put (Sum, 4, 7, 0);
          Put ("|");
          New_Line;
