@@ -57,10 +57,15 @@ procedure Main is
       return Sum;
    end;
 
+   function Normalize (X : Float; Min : Float; Max : Float) return Float is
+   begin
+      return (X - Min) / (Max - Min);
+   end;
+
    procedure Normalize ( X : in out Vector_Array; Col : Positive; Min, Max : Float ) is
    begin
       for I in X'Range loop
-         X (I) (Col) := ( X(I)(Col) - Min ) * (1.0 - 0.0) / (Max - Min) + 0.0;
+         X (I) (Col) := Normalize (X(I)(Col), Min, Max);
       end loop;
    end;
 
