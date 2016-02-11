@@ -2,6 +2,7 @@ with Ada.Text_IO;
 with Ada.Float_Text_IO;
 with Ada.Numerics.Real_Arrays;
 with Ada.Strings.Fixed;
+with Ada.Integer_Text_IO;
 
 procedure Main is
 
@@ -87,10 +88,16 @@ procedure Main is
 
    package Samples is
       use Ada.Numerics.Real_Arrays;
-      subtype Attribute_Type is Integer range 1 .. 3;
-      subtype Sample is Real_Vector (Attribute_Type);
+      subtype Attribute_Type is Integer range 1 .. 2;
+      type Bird_Type is (Blahake_Type, Bofink_Type);
+      type Sample is record
+         Bird : Bird_Type;
+         Attribute : Real_Vector (Attribute_Type);
+      end record;
+
       type Sample_Array is array (1 .. 5) of Sample;
-      procedure Read (Name : String; A : Attribute_Type; X : out Sample_Array; Min : out Float; Max : out Float);
+      procedure Read_Sample_Array (Name : String; A : Attribute_Type; X : out Sample_Array; Min : out Float; Max : out Float);
+      procedure Read_Sample_Array_Type (Name : String; X : out Sample_Array);
       procedure Normalize (A : Attribute_Type; Min, Max : Float; X : in out Sample_Array);
       procedure Put (X : Sample);
    end;
@@ -99,7 +106,7 @@ procedure Main is
 
    package body Samples is
 
-      procedure Read (Name : String; A : Attribute_Type; X : out Sample_Array; Min : out Float; Max : out Float) is
+      procedure Read_Sample_Array (Name : String; A : Attribute_Type; X : out Sample_Array; Min : out Float; Max : out Float) is
          use Ada.Text_IO;
          use Ada.Float_Text_IO;
          File : File_Type;
@@ -109,7 +116,7 @@ procedure Main is
          Open (File, In_File, Name);
          for I in X'Range loop
             declare
-               V : Float renames X (I) (A);
+               V : Float renames X (I).Attribute (A);
             begin
                Get (File, V);
                if V > Max then
@@ -123,6 +130,20 @@ procedure Main is
          Close (File);
       end;
 
+      procedure Read_Sample_Array_Type (Name : String; X : out Sample_Array) is
+         use Ada.Text_IO;
+         use Ada.Integer_Text_IO;
+         File : File_Type;
+         V : Integer;
+      begin
+         Open (File, In_File, Name);
+         for I in X'Range loop
+            Get (File, V);
+            X (I).Bird := Bird_Type'Enum_Val (V);
+         end loop;
+         Close (File);
+      end;
+
       function Normalize (X : Float; Min : Float; Max : Float) return Float is
       begin
          return (X - Min) / (Max - Min);
@@ -131,14 +152,14 @@ procedure Main is
       procedure Normalize (A : Attribute_Type; Min, Max : Float; X : in out Sample_Array) is
       begin
          for I in X'Range loop
-            X (I) (A) := Normalize (X (I) (A), Min, Max);
+            X (I).Attribute (A) := Normalize (X (I).Attribute (A), Min, Max);
          end loop;
       end;
 
       procedure Put (X : Sample) is
          use Ada.Float_Text_IO;
       begin
-         for E of X loop
+         for E of X.Attribute loop
             Put (E, 4, 1, 0);
          end loop;
       end;
@@ -147,19 +168,18 @@ procedure Main is
 
    use Samples;
 
-
+   use Ada.Numerics.Real_Arrays;
 
    X : Sample_Array;
-   W : Sample := (Others => 1.0);
+   W : Real_Vector (Attribute_Type) := (others => 1.0);
    Min, Max : Float := 0.0;
 begin
 
-   Read ("A.csv", 1, X, Min, Max);
+   Read_Sample_Array ("A.csv", 1, X, Min, Max);
    Normalize (1, Min, Max, X);
-   Read ("B.csv", 2, X, Min, Max);
+   Read_Sample_Array ("B.csv", 2, X, Min, Max);
    Normalize (2, Min, Max, X);
-   Read ("R.csv", 3, X, Min, Max);
-   Normalize (3, Min, Max, X);
+   Read_Sample_Array_Type ("R.csv", X);
 
    -- Print Cases with their respective attributes
    declare
@@ -197,18 +217,18 @@ begin
       Put ("|");
       New_Line;
       for I in Sample_Array'Range loop
-         Put (X (I) (3), 4, 7, 0);
+         Put (Tail (X (I).Bird'Img, 12));
          Put ("|");
-         Sum := Deviation_Manhattan (W, X (1) (1 .. 2), X (I) (1 .. 2));
+         Sum := Deviation_Manhattan (W, X (1).Attribute, X (I).Attribute);
          Put (Sum, 4, 7, 0);
          Put ("|");
-         Sum := Deviation_Euclidean (W, X (1) (1 .. 2), X (I) (1 .. 2));
+         Sum := Deviation_Euclidean (W, X (1).Attribute, X (I).Attribute);
          Put (Sum, 4, 7, 0);
          Put ("|");
-         Sum := Deviation_Canberra (W, X (1) (1 .. 2), X (I) (1 .. 2));
+         Sum := Deviation_Canberra (W, X (1).Attribute, X (I).Attribute);
          Put (Sum, 4, 7, 0);
          Put ("|");
-         Sum := Deviation_Mixed (W, X (1) (1 .. 2), X (I) (1 .. 2));
+         Sum := Deviation_Mixed (W, X (1).Attribute, X (I).Attribute);
          Put (Sum, 4, 7, 0);
          Put ("|");
          New_Line;
