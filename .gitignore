@@ -1,7 +1,17 @@
-obj
-
-# Object file
 *.o
-
-# Ada Library Information
 *.ali
+*.exe
+*.bexch
+*.bat
+*.cgpr
+*.lexch
+*.db
+*.xml
+*.a
+*.db-wal
+*.db-shm
+*.#*
+*.xml
+*.TMP
+b_*
+b~*
