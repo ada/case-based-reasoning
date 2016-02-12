@@ -3,171 +3,18 @@ with Ada.Float_Text_IO;
 with Ada.Numerics.Real_Arrays;
 with Ada.Strings.Fixed;
 with Ada.Integer_Text_IO;
+with CBR.Distances;
+with Birds;
+with Birds.Probabilities;
+with Birds.Samples;
 
 procedure Main is
 
-   package CBR_Distances is
-      use Ada.Numerics.Real_Arrays;
-      function Deviation_Manhattan (W, A, B : Real_Vector) return Float;
-      function Deviation_Euclidean (W, A, B : Real_Vector) return Float;
-      function Deviation_Canberra (W, A, B : Real_Vector) return Float;
-      function Deviation_Mixed (W, A, B : Real_Vector) return Float;
-   end;
-
-   package body CBR_Distances is
-
-      function Deviation_Euclidean (X1, X2 : Float) return Float is
-      begin
-         return (X1 - X2) ** 2;
-      end;
-
-      function Deviation_Manhattan (X1, X2 : Float) return Float is
-      begin
-         return abs (X1 - X2);
-      end;
-
-      function Deviation_Canberra (X1, X2 : Float) return Float is
-      begin
-         if (X1 - X2) = 0.0 then
-            return 0.0;
-         end if;
-         return abs (X1 - X2) / (abs X1 + abs X2);
-      end;
-
-      function Deviation_Mixed (X1, X2 : Float) return Float is
-         R : Float;
-      begin
-         R := Deviation_Euclidean (X1, X2) + Deviation_Manhattan (X1, X2) + Deviation_Canberra (X1, X2);
-         R := R / 3.0;
-         return R;
-      end;
-
-
-      function Deviation_Euclidean (W, A, B : Real_Vector) return Float is
-         Sum : Float := 0.0;
-      begin
-         for I in A'Range loop
-            Sum := Sum + W(I) * Deviation_Euclidean (A (I), B (I));
-         end loop;
-         Sum := Sum / Float (A'Length);
-         return Sum;
-      end;
-
-      function Deviation_Manhattan (W, A, B : Real_Vector) return Float is
-         Sum : Float := 0.0;
-      begin
-         for I in A'Range loop
-            Sum := Sum + W(I) * Deviation_Manhattan (A (I), B (I));
-         end loop;
-         Sum := Sum / Float (A'Length);
-         return Sum;
-      end;
-
-      function Deviation_Canberra (W, A, B : Real_Vector) return Float is
-         Sum : Float := 0.0;
-      begin
-         for I in A'Range loop
-            Sum := Sum + W (I) * Deviation_Canberra (A (I), B (I));
-         end loop;
-         Sum := Sum / Float (A'Length);
-         return Sum;
-      end;
-
-      function Deviation_Mixed (W, A, B : Real_Vector) return Float is
-         Sum : Float := 0.0;
-      begin
-         for I in A'Range loop
-            Sum := Sum + W (I) * Deviation_Mixed (A (I), B (I));
-         end loop;
-         Sum := Sum / Float (A'Length);
-         return Sum;
-      end;
-
-   end;
-
-
-   package Samples is
-      use Ada.Numerics.Real_Arrays;
-      subtype Attribute_Type is Integer range 1 .. 2;
-      type Bird_Type is (Blahake_Type, Bofink_Type);
-      type Sample is record
-         Bird : Bird_Type;
-         Attribute : Real_Vector (Attribute_Type);
-      end record;
-
-      type Sample_Array is array (1 .. 5) of Sample;
-      procedure Read_Sample_Array (Name : String; A : Attribute_Type; X : out Sample_Array; Min : out Float; Max : out Float);
-      procedure Read_Sample_Array_Type (Name : String; X : out Sample_Array);
-      procedure Normalize (A : Attribute_Type; Min, Max : Float; X : in out Sample_Array);
-      procedure Put (X : Sample);
-   end;
 
 
 
-   package body Samples is
-
-      procedure Read_Sample_Array (Name : String; A : Attribute_Type; X : out Sample_Array; Min : out Float; Max : out Float) is
-         use Ada.Text_IO;
-         use Ada.Float_Text_IO;
-         File : File_Type;
-      begin
-         Min := Float'Last;
-         Max := Float'First;
-         Open (File, In_File, Name);
-         for I in X'Range loop
-            declare
-               V : Float renames X (I).Attribute (A);
-            begin
-               Get (File, V);
-               if V > Max then
-                  Max := V;
-               end if;
-               if V < Min then
-                  Min := V;
-               end if;
-            end;
-         end loop;
-         Close (File);
-      end;
-
-      procedure Read_Sample_Array_Type (Name : String; X : out Sample_Array) is
-         use Ada.Text_IO;
-         use Ada.Integer_Text_IO;
-         File : File_Type;
-         V : Integer;
-      begin
-         Open (File, In_File, Name);
-         for I in X'Range loop
-            Get (File, V);
-            X (I).Bird := Bird_Type'Enum_Val (V);
-         end loop;
-         Close (File);
-      end;
-
-      function Normalize (X : Float; Min : Float; Max : Float) return Float is
-      begin
-         return (X - Min) / (Max - Min);
-      end;
-
-      procedure Normalize (A : Attribute_Type; Min, Max : Float; X : in out Sample_Array) is
-      begin
-         for I in X'Range loop
-            X (I).Attribute (A) := Normalize (X (I).Attribute (A), Min, Max);
-         end loop;
-      end;
-
-      procedure Put (X : Sample) is
-         use Ada.Float_Text_IO;
-      begin
-         for E of X.Attribute loop
-            Put (E, 4, 1, 0);
-         end loop;
-      end;
-
-   end;
-
-   use Samples;
-
+   use Birds;
+   use Birds.Samples;
    use Ada.Numerics.Real_Arrays;
 
    X : Sample_Array;
@@ -198,11 +45,14 @@ begin
    -- Calculate deviation between Case 1 and all other cases.
    -- The case with max value is the most similar one.
    declare
+      use Ada.Integer_Text_IO;
       use Ada.Float_Text_IO;
       use Ada.Text_IO;
       use Ada.Strings.Fixed;
-      use CBR_Distances;
+      use CBR.Distances;
+      use Birds.Probabilities;
       Sum : Float := 0.0;
+      Bird : Bird_Probability_Collection;
    begin
       Put_Line ("Deviation");
       Put (Tail ("Class", 12));
@@ -219,21 +69,60 @@ begin
       for I in Sample_Array'Range loop
          Put (Tail (X (I).Bird'Img, 12));
          Put ("|");
-         Sum := Deviation_Manhattan (W, X (1).Attribute, X (I).Attribute);
+         Sum := Manhattan_Deviation (W, X (1).Attribute, X (I).Attribute);
+         Bird (X (I).Bird).Likeliness (Manhattan_Kind) := Bird (X (I).Bird).Likeliness (Manhattan_Kind) + Sum;
          Put (Sum, 4, 7, 0);
          Put ("|");
-         Sum := Deviation_Euclidean (W, X (1).Attribute, X (I).Attribute);
+         Sum := Euclidean2_Deviation(W, X (1).Attribute, X (I).Attribute);
+         Bird (X (I).Bird).Likeliness (Euclidean2_Kind) := Bird (X (I).Bird).Likeliness (Euclidean2_Kind) + Sum;
          Put (Sum, 4, 7, 0);
          Put ("|");
-         Sum := Deviation_Canberra (W, X (1).Attribute, X (I).Attribute);
+         Sum := Canberra_Deviation (W, X (1).Attribute, X (I).Attribute);
+         Bird (X (I).Bird).Likeliness (Canberra_Kind) := Bird (X (I).Bird).Likeliness (Canberra_Kind) + Sum;
          Put (Sum, 4, 7, 0);
          Put ("|");
-         Sum := Deviation_Mixed (W, X (1).Attribute, X (I).Attribute);
+         Sum := Mixed_Deviation (W, X (1).Attribute, X (I).Attribute);
+         Bird (X (I).Bird).Likeliness (Mixed_Kind) := Bird (X (I).Bird).Likeliness (Mixed_Kind) + Sum;
          Put (Sum, 4, 7, 0);
+         Put ("|");
+         New_Line;
+         Bird (X (I).Bird).Count := Bird (X (I).Bird).Count + 1;
+      end loop;
+      New_Line (2);
+
+
+      Put_Line ("Deviation Sum");
+      Put (Tail ("Class", 12));
+      Put ("|");
+      Put (Tail ("Sample-Count", 12));
+      Put ("|");
+      Put (Tail ("Manhattan", 12));
+      Put ("|");
+      Put (Tail ("Euclidean", 12));
+      Put ("|");
+      Put (Tail ("Canberra", 12));
+      Put ("|");
+      Put (Tail ("Mixed", 12));
+      Put ("|");
+      New_Line;
+      for I in Bird'Range loop
+         Put (Tail (I'Img, 12));
+         Put ("|");
+         Put (Bird (I).Count, 12);
+         Put ("|");
+         Put (Bird (I).Likeliness (Manhattan_Kind), 4, 7, 0);
+         Put ("|");
+         Put (Bird (I).Likeliness (Euclidean2_Kind), 4, 7, 0);
+         Put ("|");
+         Put (Bird (I).Likeliness (Canberra_Kind), 4, 7, 0);
+         Put ("|");
+         Put (Bird (I).Likeliness (Mixed_Kind), 4, 7, 0);
          Put ("|");
          New_Line;
       end loop;
       New_Line (2);
+
+
    end;
 
 
