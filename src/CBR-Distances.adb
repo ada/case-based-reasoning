@@ -66,4 +66,17 @@ package body CBR.Distances is
       Sum := Sum / Float (A'Length);
       return Sum;
    end;
+
+
+   function Generic_Deviation (W, A, B : Vector) return Float is
+      Sum : Float := 0.0;
+   begin
+      for I in Vector'Range loop
+         Sum := Sum + W (I) * Distance (A (I), B (I));
+      end loop;
+      Sum := Sum / Float (Vector'Length);
+      return Sum;
+   end;
+
+
 end;

@@ -4,7 +4,7 @@ with Ada.Integer_Text_IO;
 
 package body Birds.Samples is
 
-   procedure Read_Sample_Array (Name : String; A : Attribute_Type; X : out Sample_Array; Min : out Float; Max : out Float) is
+   procedure Read_Sample_Array (Name : String; A : Attribute_Kind; X : out Sample_Array; Min : out Float; Max : out Float) is
       use Ada.Text_IO;
       use Ada.Float_Text_IO;
       File : File_Type;
@@ -47,14 +47,14 @@ package body Birds.Samples is
       return (X - Min) / (Max - Min);
    end;
 
-   procedure Normalize (A : Attribute_Type; Min, Max : Float; X : in out Sample_Array) is
+   procedure Normalize (A : Attribute_Kind; Min, Max : Float; X : in out Sample_Array) is
    begin
       for I in X'Range loop
          X (I).Attribute (A) := Normalize (X (I).Attribute (A), Min, Max);
       end loop;
    end;
 
-   procedure Put (X : Sample) is
+   procedure Put (X : Bird_Sample) is
       use Ada.Float_Text_IO;
    begin
       for E of X.Attribute loop
