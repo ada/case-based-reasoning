@@ -50,7 +50,7 @@ procedure Main is
       use Birds.Samples;
       use Birds;
       Sum : Float := 0.0;
-      Bird : Bird_Probability_Collection;
+      Prospect_Array : Probability_Collection;
       Divergency : Deviation_Array;
    begin
 
@@ -63,7 +63,7 @@ procedure Main is
 
       for I in X'Range loop
          Estimate (X (1), X (I), Divergency);
-         Estimate (X (1), X (I), Bird (X (I).Bird));
+         Estimate (X (1), X (I), Prospect_Array (X (I).Bird));
          Put (Tail (X (I).Bird'Img, 12));
          Put ("|");
          Put_Deviation_Array (Divergency, 12, "|");
@@ -77,14 +77,12 @@ procedure Main is
       Put_Probability_Header (12, "|");
       New_Line;
 
-      for I in Bird'Range loop
+      for I in Prospect_Array'Range loop
          Put (Tail (I'Img, 12));
          Put ("|");
-         Put_Probability (Bird (I), 12, "|");
+         Put_Probability (Prospect_Array (I), 12, "|");
          New_Line;
       end loop;
-      New_Line (2);
-
 
    end;
 
@@ -99,6 +97,8 @@ begin
    Ada.Text_IO.New_Line (2);
 
    Estimation;
+
+   Ada.Text_IO.New_Line (2);
 
 end;
 

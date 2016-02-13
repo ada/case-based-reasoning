@@ -33,13 +33,19 @@ package body Birds.Probabilities is
       return Sum;
    end;
 
-   procedure Put_Deviation_Kind (Width : Natural; Separator : String) is
+   procedure Put_Deviation_Kind (X : Deviation_Kind; Width : Natural) is
       use Ada.Strings.Fixed;
       use Ada.Text_IO;
       Trim_Right : constant Natural := 5;
    begin
+      Put (Tail (X'Img (X'Img'First .. X'Img'Last - Trim_Right), Width));
+   end;
+
+   procedure Put_Deviation_Kind (Width : Natural; Separator : String) is
+      use Ada.Text_IO;
+   begin
       for I in Deviation_Kind loop
-         Put (Tail (I'Img (I'Img'First .. I'Img'Last - Trim_Right), Width));
+         Put_Deviation_Kind (I, Width);
          Put (Separator);
       end loop;
    end;
