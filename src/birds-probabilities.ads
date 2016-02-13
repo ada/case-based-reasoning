@@ -1,26 +1,27 @@
-with Ada.Numerics.Real_Arrays;
 with CBR.Distances;
 with Birds.Samples;
 
 package Birds.Probabilities is
 
-   use Ada.Numerics.Real_Arrays;
    use Birds.Samples;
+   use CBR.Distances;
 
-   function Euclidean2_Deviation is new CBR.Distances.Generic_Deviation (Attribute_Kind, Attribute_Array, CBR.Distances.Euclidean2_Distance);
-   function Manhattan_Deviation is new CBR.Distances.Generic_Deviation (Attribute_Kind, Attribute_Array, CBR.Distances.Manhattan_Distance);
-   function Canberra_Deviation is new CBR.Distances.Generic_Deviation (Attribute_Kind, Attribute_Array, CBR.Distances.Canberra_Distance);
-   function Mixed_Deviation is new CBR.Distances.Generic_Deviation (Attribute_Kind, Attribute_Array, CBR.Distances.Mixed_Distance);
+   function Euclidean2_Deviation is new Generic_Deviation (Attribute_Kind, Attribute_Array, Euclidean2_Distance);
+   function Manhattan_Deviation is new Generic_Deviation (Attribute_Kind, Attribute_Array, Manhattan_Distance);
+   function Canberra_Deviation is new Generic_Deviation (Attribute_Kind, Attribute_Array, Canberra_Distance);
+   function Mixed_Deviation is new Generic_Deviation (Attribute_Kind, Attribute_Array, Mixed_Distance);
+   function Experimental_Deviation is new Generic_Deviation (Attribute_Kind, Attribute_Array, Experimental_Distance);
 
    type Deviation_Operator is access function (W, X1, X2 : Attribute_Array) return Float;
-   type Deviation_Kind is (Euclidean2_Kind, Manhattan_Kind, Canberra_Kind, Mixed_Kind);
+   type Deviation_Kind is (Euclidean2_Kind, Manhattan_Kind, Canberra_Kind, Mixed_Kind, Experimental_Kind);
 
    Deviation_Operator_List : constant array (Deviation_Kind) of Deviation_Operator :=
      (
       Euclidean2_Deviation'Access,
       Manhattan_Deviation'Access,
       Canberra_Deviation'Access,
-      Mixed_Deviation'Access
+      Mixed_Deviation'Access,
+      Experimental_Deviation'Access
      );
 
    type Deviation_Array is array (Deviation_Kind) of Float;

@@ -1,5 +1,15 @@
 package body CBR.Distances is
 
+   function Generic_Deviation (W, A, B : Vector) return Float is
+      Sum : Float := 0.0;
+   begin
+      for I in Vector'Range loop
+         Sum := Sum + W (I) * Distance (A (I), B (I));
+      end loop;
+      Sum := Sum / Float (Vector'Length);
+      return Sum;
+   end;
+
    function Euclidean2_Distance (X1, X2 : Float) return Float is
    begin
       return (X1 - X2) ** 2;
@@ -26,15 +36,11 @@ package body CBR.Distances is
       return R;
    end;
 
-   function Generic_Deviation (W, A, B : Vector) return Float is
-      Sum : Float := 0.0;
+   function Experimental_Distance (X1, X2 : Float) return Float is
    begin
-      for I in Vector'Range loop
-         Sum := Sum + W (I) * Distance (A (I), B (I));
-      end loop;
-      Sum := Sum / Float (Vector'Length);
-      return Sum;
+      return (X1 - X2) ** 2 / (X1 ** 2 + X2 ** 2);
    end;
+
 
 
 end;
