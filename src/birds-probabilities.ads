@@ -34,8 +34,11 @@ package Birds.Probabilities is
 
    procedure Estimate (Instance : Sample; Asset : Sample; Deviation : in out Deviation_Array);
    procedure Estimate (Instance : Sample; Asset : Sample; Prospect : in out Probability);
-   function Likelihood (Prospect : in out Probability) return Float;
+   function Likelihood (Prospect : Probability) return Float;
 
    procedure Put_Deviation_Kind (Width : Natural; Separator : String);
+   procedure Put_Deviation_Array (X : Deviation_Array; Width : Natural; Separator : String);
+   procedure Put_Probability (X : Probability; Width : Natural; Separator : String);
+   procedure Put_Probability_Header (Width : Natural; Separator : String);
 
 end;
