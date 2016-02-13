@@ -26,48 +26,6 @@ package body CBR.Distances is
       return R;
    end;
 
-
-   function Euclidean2_Deviation (W, A, B : Real_Vector) return Float is
-      Sum : Float := 0.0;
-   begin
-      for I in A'Range loop
-         Sum := Sum + W(I) * Euclidean2_Distance (A (I), B (I));
-      end loop;
-      Sum := Sum / Float (A'Length);
-      return Sum;
-   end;
-
-   function Manhattan_Deviation (W, A, B : Real_Vector) return Float is
-      Sum : Float := 0.0;
-   begin
-      for I in A'Range loop
-         Sum := Sum + W(I) * Manhattan_Distance (A (I), B (I));
-      end loop;
-      Sum := Sum / Float (A'Length);
-      return Sum;
-   end;
-
-   function Canberra_Deviation (W, A, B : Real_Vector) return Float is
-      Sum : Float := 0.0;
-   begin
-      for I in A'Range loop
-         Sum := Sum + W (I) * Canberra_Distance (A (I), B (I));
-      end loop;
-      Sum := Sum / Float (A'Length);
-      return Sum;
-   end;
-
-   function Mixed_Deviation (W, A, B : Real_Vector) return Float is
-      Sum : Float := 0.0;
-   begin
-      for I in A'Range loop
-         Sum := Sum + W (I) * Mixed_Distance (A (I), B (I));
-      end loop;
-      Sum := Sum / Float (A'Length);
-      return Sum;
-   end;
-
-
    function Generic_Deviation (W, A, B : Vector) return Float is
       Sum : Float := 0.0;
    begin
