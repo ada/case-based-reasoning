@@ -1,11 +1,13 @@
 package Birds is
 
-   type Bird_Kind is (Blahake_Kind, Bofink_Kind);
 
-   type Attribute_Kind is (Freq1_Kind, Freq2_Kind);
+   package Attributes is
+      type Kind is (Freq1, Freq2);
+      type Vector is array (Kind) of Float;
+      procedure Put_Kind (Width : Natural);
+   end;
 
-   type Attribute_Array is array (Attribute_Kind) of Float;
+   type Kind is (Blahake_Kind, Bofink_Kind);
 
-   procedure Put_Attribute_Kind (Width : Natural);
 
 end;

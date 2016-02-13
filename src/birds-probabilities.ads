@@ -7,16 +7,16 @@ package Birds.Probabilities is
    use CBR.Distances;
 
    package Deviations is
-      function Euclidean2 is new Generic_Deviation (Attribute_Kind, Attribute_Array, Euclidean2_Distance);
-      function Manhattan is new Generic_Deviation (Attribute_Kind, Attribute_Array, Manhattan_Distance);
-      function Canberra is new Generic_Deviation (Attribute_Kind, Attribute_Array, Canberra_Distance);
-      function Canal is new Generic_Deviation (Attribute_Kind, Attribute_Array, Canal_Distance);
-      function Tan is new Generic_Deviation (Attribute_Kind, Attribute_Array, Tan_Distance);
-      function Mixed is new Generic_Deviation (Attribute_Kind, Attribute_Array, Mixed_Distance);
-      function Experimental is new Generic_Deviation (Attribute_Kind, Attribute_Array, Experimental_Distance);
-      type Operator is access function (W, X1, X2 : Attribute_Array) return Float;
+      function Euclidean2 is new Generic_Deviation (Attributes.Kind, Attributes.Vector, Euclidean2_Distance);
+      function Manhattan is new Generic_Deviation (Attributes.Kind, Attributes.Vector, Manhattan_Distance);
+      function Canberra is new Generic_Deviation (Attributes.Kind, Attributes.Vector, Canberra_Distance);
+      function Canal is new Generic_Deviation (Attributes.Kind, Attributes.Vector, Canal_Distance);
+      function Tan is new Generic_Deviation (Attributes.Kind, Attributes.Vector, Tan_Distance);
+      function Mixed is new Generic_Deviation (Attributes.Kind, Attributes.Vector, Mixed_Distance);
+      function Experimental is new Generic_Deviation (Attributes.Kind, Attributes.Vector, Experimental_Distance);
+      type Operator is access function (W, X1, X2 : Attributes.Vector) return Float;
       type Kind is (Euclidean2_Kind, Manhattan_Kind, Canberra_Kind, Canal_Kind, Tan_Kind, Mixed_Kind, Experimental_Kind);
-      Operator_List : constant array (Kind) of Operator :=
+      Operator_List : constant array (Deviations.Kind) of Operator :=
         (
          Euclidean2'Access,
          Manhattan'Access,
@@ -43,7 +43,7 @@ package Birds.Probabilities is
       Divergency : Deviations.Vector := (others => 0.0);
    end record;
 
-   type Probability_Collection is array (Bird_Kind) of Probability;
+   type Probability_Collection is array (Kind) of Probability;
 
    procedure Estimate (Instance : Sample; Asset : Sample; Deviation : in out Deviations.Vector);
    procedure Estimate (Instance : Sample; Asset : Sample; Prospect : in out Probability);

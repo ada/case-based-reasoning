@@ -7,7 +7,7 @@ with Ada.Integer_Text_IO;
 package body Birds.Probabilities is
 
    procedure Estimate (Instance : Sample; Asset : Sample; Deviation : in out Deviations.Vector) is
-      W : Attribute_Array := (others => 1.0);
+      W : Attributes.Vector := (others => 1.0);
    begin
       for I in Deviations.Kind loop
          Deviation (I) := Deviations.Operator_List (I) (W, Instance.Attribute, Asset.Attribute);
@@ -15,7 +15,7 @@ package body Birds.Probabilities is
    end;
 
    procedure Estimate (Instance : Sample; Asset : Sample; Prospect : in out Probability) is
-      W : Attribute_Array := (others => 1.0);
+      W : Attributes.Vector := (others => 1.0);
    begin
       for I in Deviations.Kind loop
          Prospect.Divergency (I) := Prospect.Divergency (I) + Deviations.Operator_List (I) (W, Instance.Attribute, Asset.Attribute);

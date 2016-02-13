@@ -10,15 +10,15 @@ with Birds.Samples;
 
 procedure Main is
 
-   X : Birds.Samples.Sample_Array (1 .. 8);
+   X : Birds.Samples.Vector (1 .. 8);
 
 
    procedure Read_Files is
       use Birds;
       use Birds.Samples;
    begin
-      Read_Sample_Array_Normalized ("A.csv", Freq1_Kind, X);
-      Read_Sample_Array_Normalized ("B.csv", Freq2_Kind, X);
+      Read_Sample_Array_Normalized ("A.csv", Attributes.Freq1, X);
+      Read_Sample_Array_Normalized ("B.csv", Attributes.Freq2, X);
       Read_Sample_Array_Type ("R.csv", X);
    end;
 
@@ -31,7 +31,7 @@ procedure Main is
       use Birds;
    begin
       Put_Line ("Samples");
-      Put_Attribute_Kind (12);
+      Attributes.Put_Kind (12);
       New_Line;
       Put_Sample_Array (X, 12);
    end;

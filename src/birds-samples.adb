@@ -5,7 +5,7 @@ with Ada.Strings.Fixed;
 
 package body Birds.Samples is
 
-   procedure Read_Sample_Array (Name : String; A : Attribute_Kind; X : out Sample_Array; Min : out Float; Max : out Float) is
+   procedure Read_Sample_Array (Name : String; A : Attributes.Kind; X : out Vector; Min : out Float; Max : out Float) is
       use Ada.Text_IO;
       use Ada.Float_Text_IO;
       File : File_Type;
@@ -29,7 +29,7 @@ package body Birds.Samples is
       Close (File);
    end;
 
-   procedure Read_Sample_Array_Type (Name : String; X : out Sample_Array) is
+   procedure Read_Sample_Array_Type (Name : String; X : out Vector) is
       use Ada.Text_IO;
       use Ada.Integer_Text_IO;
       File : File_Type;
@@ -38,7 +38,7 @@ package body Birds.Samples is
       Open (File, In_File, Name);
       for I in X'Range loop
          Get (File, V);
-         X (I).Bird := Bird_Kind'Enum_Val (V);
+         X (I).Bird := Kind'Enum_Val (V);
       end loop;
       Close (File);
    end;
@@ -48,14 +48,14 @@ package body Birds.Samples is
       return (X - Min) / (Max - Min);
    end;
 
-   procedure Normalize (A : Attribute_Kind; Min, Max : Float; X : in out Sample_Array) is
+   procedure Normalize (A : Attributes.Kind; Min, Max : Float; X : in out Vector) is
    begin
       for I in X'Range loop
          X (I).Attribute (A) := Normalize (X (I).Attribute (A), Min, Max);
       end loop;
    end;
 
-   procedure Read_Sample_Array_Normalized (Name : String; A : Attribute_Kind; X : out Sample_Array) is
+   procedure Read_Sample_Array_Normalized (Name : String; A : Attributes.Kind; X : out Vector) is
       Min, Max : Float := 0.0;
    begin
       Read_Sample_Array (Name, A, X, Min, Max);
@@ -73,7 +73,7 @@ package body Birds.Samples is
       end loop;
    end;
 
-   procedure Put_Sample_Array (X : Sample_Array; Width : Natural) is
+   procedure Put_Sample_Array (X : Vector; Width : Natural) is
       use Ada.Text_IO;
    begin
       for E of X loop
