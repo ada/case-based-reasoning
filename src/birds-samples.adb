@@ -1,6 +1,7 @@
 with Ada.Text_IO;
 with Ada.Float_Text_IO;
 with Ada.Integer_Text_IO;
+with Ada.Strings.Fixed;
 
 package body Birds.Samples is
 
@@ -54,11 +55,30 @@ package body Birds.Samples is
       end loop;
    end;
 
-   procedure Put (X : Bird_Sample) is
+   procedure Read_Sample_Array_Normalized (Name : String; A : Attribute_Kind; X : out Sample_Array) is
+      Min, Max : Float := 0.0;
+   begin
+      Read_Sample_Array (Name, A, X, Min, Max);
+      Normalize (A, Min, Max, X);
+   end;
+
+
+   procedure Put_Sample (X : Sample; Width : Natural) is
       use Ada.Float_Text_IO;
+      use Ada.Strings.Fixed;
+      use Ada.Text_IO;
    begin
       for E of X.Attribute loop
-         Put (E, 4, 1, 0);
+         Put (E, 4, Width - 5, 0);
+      end loop;
+   end;
+
+   procedure Put_Sample_Array (X : Sample_Array; Width : Natural) is
+      use Ada.Text_IO;
+   begin
+      for E of X loop
+         Put_Sample (E, Width);
+         New_Line;
       end loop;
    end;
 

@@ -25,15 +25,17 @@ package Birds.Probabilities is
 
    type Deviation_Array is array (Deviation_Kind) of Float;
 
-   type Bird_Probability is record
+   type Probability is record
       Count : Natural := 0;
-      Deviation : Deviation_Array := (others => 0.0);
+      Divergency : Deviation_Array := (others => 0.0);
    end record;
 
-   type Bird_Probability_Collection is array (Bird_Kind) of Bird_Probability;
+   type Bird_Probability_Collection is array (Bird_Kind) of Probability;
 
-   procedure Estimate (Sample : Bird_Sample; Asset : Bird_Sample; Deviation : in out Deviation_Array);
-   procedure Estimate (Sample : Bird_Sample; Asset : Bird_Sample; Probability : in out Bird_Probability);
-   function Likelihood (Probability : in out Bird_Probability) return Float;
+   procedure Estimate (Instance : Sample; Asset : Sample; Deviation : in out Deviation_Array);
+   procedure Estimate (Instance : Sample; Asset : Sample; Prospect : in out Probability);
+   function Likelihood (Prospect : in out Probability) return Float;
+
+   procedure Put_Deviation_Kind (Width : Natural; Separator : String);
 
 end;
