@@ -29,7 +29,7 @@ package body Birds.Probabilities is
       for I in Deviation_Kind loop
          Sum := Sum + Prospect.Divergency (I);
       end loop;
-      Sum := Sum / Float (Sample_Array'Length * Deviation_Array'Length);
+      --Sum := Sum / Float (Sample_Array'Length * Deviation_Array'Length);
       return Sum;
    end;
 

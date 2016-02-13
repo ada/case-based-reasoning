@@ -6,7 +6,7 @@ package Birds.Samples is
       Attribute : Attribute_Array;
    end record;
 
-   type Sample_Array is array (1 .. 5) of Sample;
+   type Sample_Array is array (Integer range <>) of Sample;
 
 
    procedure Read_Sample_Array (Name : String; A : Attribute_Kind; X : out Sample_Array; Min : out Float; Max : out Float);

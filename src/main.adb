@@ -10,7 +10,7 @@ with Birds.Samples;
 
 procedure Main is
 
-   X : Birds.Samples.Sample_Array;
+   X : Birds.Samples.Sample_Array (1 .. 8);
 
 
    procedure Read_Files is
@@ -61,7 +61,7 @@ procedure Main is
 
       New_Line;
 
-      for I in Sample_Array'Range loop
+      for I in X'Range loop
          Estimate (X (1), X (I), Divergency);
          Estimate (X (1), X (I), Bird (X (I).Bird));
          Put (Tail (X (I).Bird'Img, 12));
