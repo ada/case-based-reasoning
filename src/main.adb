@@ -51,7 +51,7 @@ procedure Main is
       use Birds;
       Sum : Float := 0.0;
       Prospect_Array : Probability_Collection;
-      Divergency : Deviation_Array;
+      Divergency : Deviations.Vector;
    begin
 
       Put_Line ("Deviation");

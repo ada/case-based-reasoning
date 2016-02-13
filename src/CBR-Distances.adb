@@ -1,3 +1,5 @@
+with Ada.Numerics.Elementary_Functions;
+
 package body CBR.Distances is
 
    function Generic_Deviation (W, A, B : Vector) return Float is
@@ -41,6 +43,17 @@ package body CBR.Distances is
       return (X1 - X2) ** 2 / (X1 ** 2 + X2 ** 2);
    end;
 
+   function Canal_Distance (X1, X2 : Float) return Float is
+      use Ada.Numerics.Elementary_Functions;
+   begin
+      return Exp (X1 - X2) + Exp (X2 - X1);
+   end;
+
+   function Tan_Distance (X1, X2 : Float) return Float is
+      use Ada.Numerics.Elementary_Functions;
+   begin
+      return  Tan (abs (X1 - X2));
+   end;
 
 
 end;

@@ -5,6 +5,8 @@ package CBR.Distances is
    function Canberra_Distance (X1, X2 : Float) return Float;
    function Mixed_Distance (X1, X2 : Float) return Float;
    function Experimental_Distance (X1, X2 : Float) return Float;
+   function Canal_Distance (X1, X2 : Float) return Float;
+   function Tan_Distance (X1, X2 : Float) return Float;
 
    generic
       type Index is (<>);

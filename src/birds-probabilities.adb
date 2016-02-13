@@ -6,19 +6,19 @@ with Ada.Integer_Text_IO;
 
 package body Birds.Probabilities is
 
-   procedure Estimate (Instance : Sample; Asset : Sample; Deviation : in out Deviation_Array) is
+   procedure Estimate (Instance : Sample; Asset : Sample; Deviation : in out Deviations.Vector) is
       W : Attribute_Array := (others => 1.0);
    begin
-      for I in Deviation_Kind loop
-         Deviation (I) := Deviation_Operator_List (I) (W, Instance.Attribute, Asset.Attribute);
+      for I in Deviations.Kind loop
+         Deviation (I) := Deviations.Operator_List (I) (W, Instance.Attribute, Asset.Attribute);
       end loop;
    end;
 
    procedure Estimate (Instance : Sample; Asset : Sample; Prospect : in out Probability) is
       W : Attribute_Array := (others => 1.0);
    begin
-      for I in Deviation_Kind loop
-         Prospect.Divergency (I) := Prospect.Divergency (I) + Deviation_Operator_List (I) (W, Instance.Attribute, Asset.Attribute);
+      for I in Deviations.Kind loop
+         Prospect.Divergency (I) := Prospect.Divergency (I) + Deviations.Operator_List (I) (W, Instance.Attribute, Asset.Attribute);
       end loop;
       Prospect.Count := Prospect.Count + 1;
    end;
@@ -26,14 +26,14 @@ package body Birds.Probabilities is
    function Likelihood (Prospect : Probability) return Float is
       Sum : Float := 0.0;
    begin
-      for I in Deviation_Kind loop
+      for I in Deviations.Kind loop
          Sum := Sum + Prospect.Divergency (I);
       end loop;
       --Sum := Sum / Float (Sample_Array'Length * Deviation_Array'Length);
       return Sum;
    end;
 
-   procedure Put_Deviation_Kind (X : Deviation_Kind; Width : Natural) is
+   procedure Put_Deviation_Kind (X : Deviations.Kind; Width : Natural) is
       use Ada.Strings.Fixed;
       use Ada.Text_IO;
       Trim_Right : constant Natural := 5;
@@ -44,13 +44,13 @@ package body Birds.Probabilities is
    procedure Put_Deviation_Kind (Width : Natural; Separator : String) is
       use Ada.Text_IO;
    begin
-      for I in Deviation_Kind loop
+      for I in Deviations.Kind loop
          Put_Deviation_Kind (I, Width);
          Put (Separator);
       end loop;
    end;
 
-   procedure Put_Deviation_Array (X : Deviation_Array; Width : Natural; Separator : String) is
+   procedure Put_Deviation_Array (X : Deviations.Vector; Width : Natural; Separator : String) is
       use Ada.Float_Text_IO;
       use Ada.Text_IO;
    begin
