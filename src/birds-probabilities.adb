@@ -29,11 +29,11 @@ package body Birds.Probabilities is
    function Likelihood (Prospect : Probability) return Float is
       Sum : Float := 0.0;
    begin
-      for I in Deviations.Kind loop
+      for I in Prospect.Divergency'Range loop
          Sum := Sum + Prospect.Divergency (I);
       end loop;
-      --Sum := Sum / Float (Sample_Array'Length * Deviation_Array'Length);
-      return Sum;
+      Sum := Sum / Float (Prospect.Divergency'Length * Prospect.Count);
+      return (1.0 - Sum) * 100.0;
    end;
 
 
@@ -45,7 +45,8 @@ package body Birds.Probabilities is
       Put (X.Count, Width);
       Put (Separator);
       Deviations.Put_Vector (X.Divergency, Width, Separator);
-      Put (Likelihood (X), 4, Width - 5, 0);
+      Put (Likelihood (X), 4, Width - 7, 0);
+      Put (" %");
       Put (Separator);
    end;
 
