@@ -1,9 +1,6 @@
 with Ada.Text_IO;
-with Ada.Float_Text_IO;
-with Ada.Numerics.Real_Arrays;
 with Ada.Strings.Fixed;
-with Ada.Integer_Text_IO;
-with CBR.Distances;
+
 with Birds;
 with Birds.Probabilities;
 with Birds.Samples;
@@ -44,12 +41,9 @@ procedure Main is
    -- Calculate deviation between Case 1 and all other cases.
    -- The case with max value is the most similar one.
    procedure Estimation is
-      use Ada.Integer_Text_IO;
-      use Ada.Float_Text_IO;
       use Ada.Text_IO;
       use Ada.Strings.Fixed;
       use Birds.Probabilities;
-      use Birds.Samples;
       use Birds;
       Sum : Float := 0.0;
       Prospect_Array : Probability_Collection;
@@ -76,11 +70,13 @@ procedure Main is
 
 
       Put_Line ("Deviation Sum");
+      Put (Tail ("Class", 12));
+      Put ("|");
       Put_Probability_Header (12, "|");
       New_Line;
 
       for I in Prospect_Array'Range loop
-         Put (Tail (I'Img, 12));
+         Put_Kind (I, 12);
          Put ("|");
          Put_Probability (Prospect_Array (I), 12, "|");
          New_Line;

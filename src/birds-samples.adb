@@ -65,11 +65,9 @@ package body Birds.Samples is
 
    procedure Put_Sample (X : Sample; Width : Natural) is
       use Ada.Float_Text_IO;
-      use Ada.Strings.Fixed;
-      use Ada.Text_IO;
    begin
       for E of X.Attribute loop
-         Put (E, 4, Width - 5, 0);
+         Attributes.Put_Attribute (E, Width);
       end loop;
    end;
 

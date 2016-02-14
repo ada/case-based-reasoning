@@ -16,7 +16,12 @@ package body Birds.Attributes is
       end loop;
    end;
 
-
+   procedure Put_Attribute (X : Float; Width : Natural) is
+      use Ada.Float_Text_IO;
+      Right : constant Natural := 4;
+   begin
+      Put (X, 4, Width - Right - 1, 0);
+   end;
 
 
 end;

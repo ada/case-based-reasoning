@@ -3,6 +3,7 @@ with Ada.Text_IO;
 with Ada.Strings;
 with Ada.Strings.Fixed;
 with Ada.Integer_Text_IO;
+
 with Birds.Attributes;
 
 package body Birds.Probabilities is
@@ -52,8 +53,6 @@ package body Birds.Probabilities is
       use Ada.Text_IO;
       use Ada.Strings.Fixed;
    begin
-      Put (Tail ("Class", Width));
-      Put (Separator);
       Put (Tail ("Sample-Count", Width));
       Put (Separator);
       Deviations.Put_Kind (Width, Separator);

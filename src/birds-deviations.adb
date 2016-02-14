@@ -4,6 +4,7 @@ with Ada.Strings.Fixed;
 with Ada.Float_Text_IO;
 
 package body Birds.Deviations is
+
    procedure Put_Kind (X : Deviations.Kind; Width : Natural) is
       use Ada.Strings.Fixed;
       use Ada.Text_IO;

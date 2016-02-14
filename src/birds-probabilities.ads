@@ -1,4 +1,3 @@
-with CBR.Distances;
 with Birds.Samples;
 with Birds.Deviations;
 
