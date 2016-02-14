@@ -3,7 +3,7 @@ with Ada.Strings;
 with Ada.Text_IO;
 with Ada.Strings.Fixed;
 
-package body Birds is
+package body Birds.Attributes is
 
 
    procedure Put_Kind (Width : Natural) is

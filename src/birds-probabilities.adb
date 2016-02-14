@@ -3,8 +3,10 @@ with Ada.Text_IO;
 with Ada.Strings;
 with Ada.Strings.Fixed;
 with Ada.Integer_Text_IO;
+with Birds.Attributes;
 
 package body Birds.Probabilities is
+
 
    procedure Estimate (Instance : Sample; Asset : Sample; Deviation : in out Deviations.Vector) is
       W : Attributes.Vector := (others => 1.0);
@@ -33,32 +35,6 @@ package body Birds.Probabilities is
       return Sum;
    end;
 
-   procedure Put_Deviation_Kind (X : Deviations.Kind; Width : Natural) is
-      use Ada.Strings.Fixed;
-      use Ada.Text_IO;
-      Trim_Right : constant Natural := 5;
-   begin
-      Put (Tail (X'Img (X'Img'First .. X'Img'Last - Trim_Right), Width));
-   end;
-
-   procedure Put_Deviation_Kind (Width : Natural; Separator : String) is
-      use Ada.Text_IO;
-   begin
-      for I in Deviations.Kind loop
-         Put_Deviation_Kind (I, Width);
-         Put (Separator);
-      end loop;
-   end;
-
-   procedure Put_Deviation_Array (X : Deviations.Vector; Width : Natural; Separator : String) is
-      use Ada.Float_Text_IO;
-      use Ada.Text_IO;
-   begin
-      for I in X'Range loop
-         Put (X (I), 4, Width - 5, 0);
-         Put (Separator);
-      end loop;
-   end;
 
    procedure Put_Probability (X : Probability; Width : Natural; Separator : String) is
       use Ada.Float_Text_IO;
@@ -67,7 +43,7 @@ package body Birds.Probabilities is
    begin
       Put (X.Count, Width);
       Put (Separator);
-      Put_Deviation_Array (X.Divergency, Width, Separator);
+      Deviations.Put_Vector (X.Divergency, Width, Separator);
       Put (Likelihood (X), 4, Width - 5, 0);
       Put (Separator);
    end;
@@ -80,7 +56,7 @@ package body Birds.Probabilities is
       Put (Separator);
       Put (Tail ("Sample-Count", Width));
       Put (Separator);
-      Put_Deviation_Kind (Width, Separator);
+      Deviations.Put_Kind (Width, Separator);
       Put (Tail ("Likelihood", Width));
       Put (Separator);
    end;

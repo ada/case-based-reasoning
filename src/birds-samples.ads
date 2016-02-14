@@ -1,3 +1,5 @@
+with Birds.Attributes;
+
 package Birds.Samples is
 
 

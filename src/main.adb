@@ -7,6 +7,8 @@ with CBR.Distances;
 with Birds;
 with Birds.Probabilities;
 with Birds.Samples;
+with Birds.Deviations;
+with Birds.Attributes;
 
 procedure Main is
 
@@ -57,7 +59,7 @@ procedure Main is
       Put_Line ("Deviation");
       Put (Tail ("Class", 12));
       Put ("|");
-      Put_Deviation_Kind (12, "|");
+      Deviations.Put_Kind (12, "|");
 
       New_Line;
 
@@ -66,7 +68,7 @@ procedure Main is
          Estimate (X (1), X (I), Prospect_Array (X (I).Bird));
          Put (Tail (X (I).Bird'Img, 12));
          Put ("|");
-         Put_Deviation_Array (Divergency, 12, "|");
+         Deviations.Put_Vector (Divergency, 12, "|");
          New_Line;
       end loop;
 

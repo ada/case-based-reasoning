@@ -12,17 +12,17 @@ package body CBR.Distances is
       return Sum;
    end;
 
-   function Euclidean2_Distance (X1, X2 : Float) return Float is
+   function Euclidean2 (X1, X2 : Float) return Float is
    begin
       return (X1 - X2) ** 2;
    end;
 
-   function Manhattan_Distance (X1, X2 : Float) return Float is
+   function Manhattan (X1, X2 : Float) return Float is
    begin
       return abs (X1 - X2);
    end;
 
-   function Canberra_Distance (X1, X2 : Float) return Float is
+   function Canberra (X1, X2 : Float) return Float is
    begin
       if (X1 - X2) = 0.0 then
          return 0.0;
@@ -30,26 +30,25 @@ package body CBR.Distances is
       return abs (X1 - X2) / (abs X1 + abs X2);
    end;
 
-   function Mixed_Distance (X1, X2 : Float) return Float is
+   function Mixed (X1, X2 : Float) return Float is
       R : Float;
    begin
-      R := Euclidean2_Distance (X1, X2) + Manhattan_Distance (X1, X2) + Canberra_Distance (X1, X2);
+      R := Euclidean2 (X1, X2) + Manhattan (X1, X2) + Canberra (X1, X2);
       R := R / 3.0;
       return R;
    end;
 
-   function Experimental_Distance (X1, X2 : Float) return Float is
+   function Experimental (X1, X2 : Float) return Float is
    begin
       return (X1 - X2) ** 2 / (X1 ** 2 + X2 ** 2);
    end;
 
-   function Canal_Distance (X1, X2 : Float) return Float is
-      use Ada.Numerics.Elementary_Functions;
+   function Canal (X1, X2 : Float) return Float is
    begin
-      return Exp (X1 - X2) + Exp (X2 - X1);
+      return Ada.Numerics.Elementary_Functions."**" (abs (X1 - X2), (1.0 / abs (X1 - X2)));
    end;
 
-   function Tan_Distance (X1, X2 : Float) return Float is
+   function Tan (X1, X2 : Float) return Float is
       use Ada.Numerics.Elementary_Functions;
    begin
       return  Tan (abs (X1 - X2));
