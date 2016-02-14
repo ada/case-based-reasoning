@@ -2,15 +2,19 @@ with Ada.Strings;
 with Ada.Text_IO;
 with Ada.Strings.Fixed;
 with Ada.Float_Text_IO;
+with Ada.Strings.Maps.Constants;
 
 package body Birds.Deviations is
 
-   procedure Put_Kind (X : Deviations.Kind; Width : Natural) is
-      use Ada.Strings.Fixed;
+   procedure Put_Kind (X : Kind; Width : Natural) is
       use Ada.Text_IO;
-      Trim_Right : constant Natural := 5;
+      use Ada.Strings.Fixed;
+      use Ada.Strings.Maps.Constants;
+      S : String := X'Img (X'Img'First .. X'Img'Last - 5);
    begin
-      Put (Tail (X'Img (X'Img'First .. X'Img'Last - Trim_Right), Width));
+      Translate (S, Lower_Case_Map);
+      Translate (S (S'First .. S'First), Upper_Case_Map);
+      Put (Tail (S, Width));
    end;
 
    procedure Put_Kind (Width : Natural; Separator : String) is

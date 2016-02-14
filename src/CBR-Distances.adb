@@ -30,23 +30,13 @@ package body CBR.Distances is
       return abs (X1 - X2) / (abs X1 + abs X2);
    end;
 
-   function Mixed (X1, X2 : Float) return Float is
-      R : Float;
+
+   function Tanh (X1, X2 : Float) return Float is
+      use Ada.Numerics.Elementary_Functions;
    begin
-      R := Euclidean2 (X1, X2) + Manhattan (X1, X2) + Canberra (X1, X2);
-      R := R / 3.0;
-      return R;
+      return abs Tanh (X1 - X2);
    end;
 
-   function Experimental (X1, X2 : Float) return Float is
-   begin
-      return (X1 - X2) ** 2 / (X1 ** 2 + X2 ** 2);
-   end;
-
-   function Canal (X1, X2 : Float) return Float is
-   begin
-      return Ada.Numerics.Elementary_Functions."**" (abs (X1 - X2), (1.0 / abs (X1 - X2)));
-   end;
 
    function Tan (X1, X2 : Float) return Float is
       use Ada.Numerics.Elementary_Functions;

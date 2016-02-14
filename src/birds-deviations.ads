@@ -10,21 +10,17 @@ package Birds.Deviations is
    function Euclidean2   is new Distances.Generic_Deviation (Attributes.Kind, Attributes.Vector, Distances.Euclidean2);
    function Manhattan    is new Distances.Generic_Deviation (Attributes.Kind, Attributes.Vector, Distances.Manhattan);
    function Canberra     is new Distances.Generic_Deviation (Attributes.Kind, Attributes.Vector, Distances.Canberra);
-   function Canal        is new Distances.Generic_Deviation (Attributes.Kind, Attributes.Vector, Distances.Canal);
+   function Tanh        is new Distances.Generic_Deviation (Attributes.Kind, Attributes.Vector, Distances.Tanh);
    function Tan          is new Distances.Generic_Deviation (Attributes.Kind, Attributes.Vector, Distances.Tan);
-   function Mixed        is new Distances.Generic_Deviation (Attributes.Kind, Attributes.Vector, Distances.Mixed);
-   function Experimental is new Distances.Generic_Deviation (Attributes.Kind, Attributes.Vector, Distances.Experimental);
    type Operator is access function (W, X1, X2 : Attributes.Vector) return Float;
-   type Kind is (Euclidean2_Kind, Manhattan_Kind, Canberra_Kind, Canal_Kind, Tan_Kind, Mixed_Kind, Experimental_Kind);
+   type Kind is (Euclidean2_Kind, Manhattan_Kind, Canberra_Kind, Tanh_Kind, Tan_Kind);
    Operator_List : constant array (Deviations.Kind) of Operator :=
      (
       Euclidean2'Access,
       Manhattan'Access,
       Canberra'Access,
-      Canal'Access,
-      Tan'Access,
-      Mixed'Access,
-      Experimental'Access
+      Tanh'Access,
+      Tan'Access
      );
    type Vector is array (Kind) of Float;
 
