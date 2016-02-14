@@ -16,9 +16,9 @@ procedure Main is
       use Birds;
       use Birds.Samples;
    begin
-      Read_Sample_Array_Normalized ("A.csv", Attributes.Freq1, X);
-      Read_Sample_Array_Normalized ("B.csv", Attributes.Freq2, X);
-      Read_Sample_Array_Type ("R.csv", X);
+      Read_Vector_Normalized ("A.csv", Attributes.Freq1, X);
+      Read_Vector_Normalized ("B.csv", Attributes.Freq2, X);
+      Read_Vector_Kind ("R.csv", X);
    end;
 
 
@@ -32,7 +32,7 @@ procedure Main is
       Put_Line ("Samples");
       Attributes.Put_Kind (12);
       New_Line;
-      Put_Sample_Array (X, 12);
+      Put_Vector (X, 12);
    end;
 
 
