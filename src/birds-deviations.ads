@@ -1,6 +1,7 @@
 with CBR.Distances;
 with Birds;
 with Birds.Attributes;
+with Texts;
 
 package Birds.Deviations is
 
@@ -24,7 +25,11 @@ package Birds.Deviations is
      );
    type Vector is array (Kind) of Float;
 
-   procedure Put_Kind (X : Deviations.Kind; Width : Natural);
-   procedure Put_Kind (Width : Natural; Separator : String);
+   procedure Put_Kind is new Texts.Generic_Put_Enum_Value (Kind);
+   procedure Put_Kind is new Texts.Generic_Put_Enum (Kind, Put_Kind);
+
+
+
+
    procedure Put_Vector (X : Deviations.Vector; Width : Natural; Separator : String);
 end;

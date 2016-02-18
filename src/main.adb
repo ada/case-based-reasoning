@@ -32,7 +32,7 @@ procedure Main is
    begin
       Put_Line (Tail ("[Samples]", 16));
       New_Line;
-      Attributes.Put_Kind (16);
+      Attributes.Put_Kind (16, "");
       New_Line;
       Put_Vector (X, 16);
    end;
