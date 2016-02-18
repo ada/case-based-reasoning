@@ -1,7 +1,6 @@
 with Ada.Text_IO;
 with Ada.Float_Text_IO;
 with Ada.Integer_Text_IO;
-with Ada.Strings.Fixed;
 
 package body Birds.Samples is
 
@@ -18,12 +17,8 @@ package body Birds.Samples is
             V : Float renames X (I).Attribute (A);
          begin
             Get (File, V);
-            if V > Max then
-               Max := V;
-            end if;
-            if V < Min then
-               Min := V;
-            end if;
+            Max := Float'Max (Max, V);
+            Min := Float'Min (Min, V);
          end;
       end loop;
       Close (File);

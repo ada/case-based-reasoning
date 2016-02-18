@@ -47,7 +47,6 @@ procedure Main is
       use Ada.Strings.Fixed;
       use Birds.Probabilities;
       use Birds;
-      Sum : Float := 0.0;
       Prospect_Array : Probability_Collection;
       Divergency : Deviations.Vector;
    begin
