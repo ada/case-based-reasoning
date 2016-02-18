@@ -18,7 +18,7 @@ package Birds.Samples is
    procedure Normalize_Vector (A : Attributes.Kind; Min, Max : Float; X : in out Vector);
 
 
-   procedure Put (X : Sample; Width : Natural);
-   procedure Put_Vector (X : Vector; Width : Natural);
+   procedure Put (X : Sample; Fore : Natural; Width : Natural);
+   procedure Put_Vector (X : Vector; Fore : Natural; Width : Natural);
 
 end;

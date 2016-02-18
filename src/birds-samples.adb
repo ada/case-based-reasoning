@@ -1,6 +1,7 @@
 with Ada.Text_IO;
 with Ada.Float_Text_IO;
 with Ada.Integer_Text_IO;
+with Texts;
 
 package body Birds.Samples is
 
@@ -58,19 +59,19 @@ package body Birds.Samples is
    end;
 
 
-   procedure Put (X : Sample; Width : Natural) is
-      use Ada.Float_Text_IO;
+   procedure Put (X : Sample; Fore : Natural; Width : Natural) is
+      use Texts;
    begin
       for E of X.Attribute loop
-         Attributes.Put_Attribute (E, Width);
+         Put (E, Fore, Width);
       end loop;
    end;
 
-   procedure Put_Vector (X : Vector; Width : Natural) is
+   procedure Put_Vector (X : Vector; Fore : Natural; Width : Natural) is
       use Ada.Text_IO;
    begin
       for E of X loop
-         Put (E, Width);
+         Put (E, Fore, Width);
          New_Line;
       end loop;
    end;

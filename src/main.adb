@@ -34,7 +34,7 @@ procedure Main is
       New_Line;
       Attributes.Put_Kind (16, "");
       New_Line;
-      Put_Vector (X, 16);
+      Put_Vector (X, 2, 16);
    end;
 
 

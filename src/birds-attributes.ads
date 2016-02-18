@@ -8,6 +8,6 @@ package Birds.Attributes is
    procedure Put_Kind is new Texts.Generic_Put_Enum_Value (Kind);
    procedure Put_Kind is new Texts.Generic_Put_Enum (Kind, Put_Kind);
 
-   procedure Put_Attribute (X : Float; Width : Natural);
+   procedure Dummy;
 
 end;

@@ -10,4 +10,6 @@ package Texts is
    procedure Generic_Put_Enum (Width : Natural; Separator : String);
 
 
+   procedure Put (Value : Float; Fore : Natural; Width : Natural);
+
 end;

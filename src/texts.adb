@@ -2,6 +2,7 @@ with Ada.Text_IO;
 with Ada.Strings;
 with Ada.Strings.Fixed;
 with Ada.Strings.Maps.Constants;
+with Ada.Float_Text_IO;
 
 package body Texts is
 
@@ -24,6 +25,13 @@ package body Texts is
          Put (I, Width);
          Put (Separator);
       end loop;
+   end;
+
+
+   procedure Put (Value : Float; Fore : Natural; Width : Natural) is
+      use Ada.Float_Text_IO;
+   begin
+      Put (Value, Fore, Width - Fore - 1, 0);
    end;
 
 end;
