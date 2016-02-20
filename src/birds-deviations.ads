@@ -8,14 +8,23 @@ package Birds.Deviations is
    use Birds;
    use CBR;
 
-   function Euclidean2   is new Distances.Generic_Deviation (Attributes.Kind, Attributes.Vector, Distances.Euclidean2);
-   function Manhattan    is new Distances.Generic_Deviation (Attributes.Kind, Attributes.Vector, Distances.Manhattan);
-   function Canberra     is new Distances.Generic_Deviation (Attributes.Kind, Attributes.Vector, Distances.Canberra);
-   function Tanh        is new Distances.Generic_Deviation (Attributes.Kind, Attributes.Vector, Distances.Tanh);
-   function Tan          is new Distances.Generic_Deviation (Attributes.Kind, Attributes.Vector, Distances.Tan);
+   function Euclidean2   is new Distances.Generic_Deviation (Attributes.Kinds.Kind, Attributes.Vector, Distances.Euclidean2);
+   function Manhattan    is new Distances.Generic_Deviation (Attributes.Kinds.Kind, Attributes.Vector, Distances.Manhattan);
+   function Canberra     is new Distances.Generic_Deviation (Attributes.Kinds.Kind, Attributes.Vector, Distances.Canberra);
+   function Tanh        is new Distances.Generic_Deviation (Attributes.Kinds.Kind, Attributes.Vector, Distances.Tanh);
+   function Tan          is new Distances.Generic_Deviation (Attributes.Kinds.Kind, Attributes.Vector, Distances.Tan);
    type Operator is access function (W, X1, X2 : Attributes.Vector) return Float;
-   type Kind is (Euclidean2_Kind, Manhattan_Kind, Canberra_Kind, Tanh_Kind, Tan_Kind);
-   Operator_List : constant array (Deviations.Kind) of Operator :=
+
+   package Kinds is
+      type Kind is (Euclidean2, Manhattan, Canberra, Tanh, Tan);
+      procedure Put_Head is new Texts.Generic_Put_All_Enum_Head (Kinds.Kind);
+      procedure Put_Tail is new Texts.Generic_Put_All_Enum_Tail (Kinds.Kind);
+      procedure Put_Head is new Texts.Generic_Put_Enum_Head (Kinds.Kind);
+      procedure Put_Tail is new Texts.Generic_Put_Enum_Tail (Kinds.Kind);
+   end;
+
+
+   Operator_List : constant array (Deviations.Kinds.Kind) of Operator :=
      (
       Euclidean2'Access,
       Manhattan'Access,
@@ -23,13 +32,13 @@ package Birds.Deviations is
       Tanh'Access,
       Tan'Access
      );
-   type Vector is array (Kind) of Float;
 
-   procedure Put_Kind is new Texts.Generic_Put_Enum_Value (Kind);
-   procedure Put_Kind is new Texts.Generic_Put_Enum (Kind, Put_Kind);
-
+   type Unconstrained_Vector is array (Deviations.Kinds.Kind range <>) of Float;
+   subtype Vector is Unconstrained_Vector (Deviations.Kinds.Kind);
 
 
+   procedure Put is new Texts.Generic_Put_Digit_Vector (Float, Deviations.Kinds.Kind, Unconstrained_Vector);
 
-   procedure Put_Vector (X : Deviations.Vector; Width : Natural; Separator : String);
+   procedure Dummy;
+
 end;

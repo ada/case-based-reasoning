@@ -1,37 +1,47 @@
-with Ada.Text_IO;
-with Ada.Strings;
 with Ada.Strings.Fixed;
-with Ada.Strings.Maps.Constants;
-with Ada.Float_Text_IO;
 
 package body Texts is
 
 
-   procedure Generic_Put_Enum_Value (X : Enum; Width : Natural) is
-      use Ada.Text_IO;
-      use Ada.Strings.Fixed;
-      use Ada.Strings.Maps.Constants;
-      S : String := X'Img;
+   procedure Generic_Put_Enum_Head (Item : Enum; Width : Natural; Pad : Character) is
+       use Ada.Strings.Fixed;
    begin
-      Translate (S, Lower_Case_Map);
-      Translate (S (S'First .. S'First), Upper_Case_Map);
-      Put (Tail (S, Width));
+      Put (Head (Item'Img, Width, Pad));
    end;
 
-   procedure Generic_Put_Enum (Width : Natural; Separator : String) is
-      use Ada.Text_IO;
+   procedure Generic_Put_Enum_Tail (Item : Enum; Width : Natural; Pad : Character) is
+       use Ada.Strings.Fixed;
+   begin
+      Put (Tail (Item'Img, Width, Pad));
+   end;
+
+
+   procedure Generic_Put_All_Enum_Head (Width : Field; Pad : Character; Separator : String) is
+      use Ada.Strings.Fixed;
    begin
       for I in Enum loop
-         Put (I, Width);
+         Put (Head (I'Img, Width, Pad));
          Put (Separator);
       end loop;
    end;
 
-
-   procedure Put (Value : Float; Fore : Natural; Width : Natural) is
-      use Ada.Float_Text_IO;
+   procedure Generic_Put_All_Enum_Tail (Width : Field; Pad : Character; Separator : String) is
+      use Ada.Strings.Fixed;
    begin
-      Put (Value, Fore, Width - Fore - 1, 0);
+      for I in Enum loop
+         Put (Tail (I'Img, Width, Pad));
+         Put (Separator);
+      end loop;
    end;
+
+   procedure Generic_Put_Digit_Vector (Item : Vector; Fore : Field; Aft : Field; Exp : Field; Separator : String) is
+      package T is new Ada.Text_IO.Float_IO (Element);
+   begin
+      for E of Item loop
+         T.Put (E, Fore, Aft, Exp);
+         Put (Separator);
+      end loop;
+   end;
+
 
 end;

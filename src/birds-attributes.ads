@@ -1,12 +1,20 @@
-with Texts;
-
 package Birds.Attributes is
 
-   type Kind is (Freq1, Freq2);
-   type Vector is array (Kind) of Float;
+   package Kinds is
+      type Kind is (Freq1, Freq2);
+      procedure Put_Head is new Texts.Generic_Put_All_Enum_Head (Kinds.Kind);
+      procedure Put_Tail is new Texts.Generic_Put_All_Enum_Tail (Kinds.Kind);
+      procedure Put_Head is new Texts.Generic_Put_Enum_Head (Kinds.Kind);
+      procedure Put_Tail is new Texts.Generic_Put_Enum_Tail (Kinds.Kind);
+   end;
 
-   procedure Put_Kind is new Texts.Generic_Put_Enum_Value (Kind);
-   procedure Put_Kind is new Texts.Generic_Put_Enum (Kind, Put_Kind);
+
+   type Unconstrained_Vector is array (Kinds.Kind range <>) of Float;
+   subtype Vector is Unconstrained_Vector (Kinds.Kind);
+
+
+
+   procedure Put is new Texts.Generic_Put_Digit_Vector (Float, Kinds.Kind, Unconstrained_Vector);
 
    procedure Dummy;
 

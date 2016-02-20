@@ -12,12 +12,13 @@ procedure Main is
    X : Birds.Samples.Vector (1 .. 8);
 
 
+
    procedure Read_Files is
       use Birds;
       use Birds.Samples;
    begin
-      Read_Vector_Normalized ("A.csv", Attributes.Freq1, X);
-      Read_Vector_Normalized ("B.csv", Attributes.Freq2, X);
+      Read_Vector_Normalized ("A.csv", Attributes.Kinds.Freq1, X);
+      Read_Vector_Normalized ("B.csv", Attributes.Kinds.Freq2, X);
       Read_Vector_Kind ("R.csv", X);
    end;
 
@@ -29,12 +30,16 @@ procedure Main is
       use Ada.Strings.Fixed;
       use Birds.Samples;
       use Birds;
+      use Birds.Attributes;
    begin
       Put_Line (Tail ("[Samples]", 16));
       New_Line;
-      Attributes.Put_Kind (16, "");
+      Attributes.Kinds.Put_Tail (16, ' ', " ");
       New_Line;
-      Put_Vector (X, 2, 16);
+      for E of X loop
+         Put (E.Attribute, 5, 10, 0, " ");
+         New_Line;
+      end loop;
    end;
 
 
@@ -53,17 +58,17 @@ procedure Main is
 
       Put_Line (Tail ("[Deviation]", 16));
       New_Line;
-      Put (Tail ("Class", 16));
+      Put (Head ("Class", 16));
       Put (" ");
-      Deviations.Put_Kind (16, " ");
+      Deviations.Kinds.Put_Tail (16, ' ', " ");
       New_Line;
 
       for I in X'Range loop
          Estimate (X (1), X (I), Divergency);
          Estimate (X (1), X (I), Prospect_Array (X (I).Bird));
-         Put_Kind (X (I).Bird, 16);
+         Put (Head (X (I).Bird'Img, 16));
          Put (" ");
-         Deviations.Put_Vector (Divergency, 16, " ");
+         Deviations.Put (Divergency, 5, 10, 0, " ");
          New_Line;
       end loop;
 
@@ -72,15 +77,15 @@ procedure Main is
 
       Put_Line (Tail ("[Summation]", 16));
       New_Line;
-      Put (Tail ("Class", 16));
+      Put (Head ("Class", 16));
       Put (" ");
       Put_Probability_Header (16, " ");
       New_Line;
 
       for I in Prospect_Array'Range loop
-         Put_Kind (I, 16);
+         Put (Head (I'Img, 16));
          Put (" ");
-         Put_Probability (Prospect_Array (I), 16, " ");
+         Put_Probability (Prospect_Array (I), 5, 10, 0, 16, " ");
          New_Line;
       end loop;
 

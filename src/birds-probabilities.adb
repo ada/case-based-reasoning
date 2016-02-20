@@ -1,5 +1,4 @@
 with Ada.Float_Text_IO;
-with Ada.Text_IO;
 with Ada.Strings;
 with Ada.Strings.Fixed;
 with Ada.Integer_Text_IO;
@@ -12,7 +11,7 @@ package body Birds.Probabilities is
    procedure Estimate (Instance : Sample; Asset : Sample; Deviation : in out Deviations.Vector) is
       W : constant Attributes.Vector := (others => 1.0);
    begin
-      for I in Deviations.Kind loop
+      for I in Deviations.Kinds.Kind loop
          Deviation (I) := Deviations.Operator_List (I) (W, Instance.Attribute, Asset.Attribute);
       end loop;
    end;
@@ -20,7 +19,7 @@ package body Birds.Probabilities is
    procedure Estimate (Instance : Sample; Asset : Sample; Prospect : in out Probability) is
       W : constant Attributes.Vector := (others => 1.0);
    begin
-      for I in Deviations.Kind loop
+      for I in Deviations.Kinds.Kind loop
          Prospect.Divergency (I) := Prospect.Divergency (I) + Deviations.Operator_List (I) (W, Instance.Attribute, Asset.Attribute);
       end loop;
       Prospect.Count := Prospect.Count + 1;
@@ -37,26 +36,24 @@ package body Birds.Probabilities is
    end;
 
 
-   procedure Put_Probability (X : Probability; Width : Natural; Separator : String) is
+   procedure Put_Probability (X : Probability; Fore : Field; Aft : Field; Exp : Field; Width : Natural; Separator : String) is
       use Ada.Float_Text_IO;
-      use Ada.Text_IO;
       use Ada.Integer_Text_IO;
    begin
       Put (X.Count, Width);
       Put (Separator);
-      Deviations.Put_Vector (X.Divergency, Width, Separator);
-      Put (Likelihood (X), 4, Width - 7, 0);
+      Deviations.Put (X.Divergency, Fore, Aft, Exp, Separator);
+      Put (Likelihood (X), Fore, Aft, Exp);
       Put (" %");
       Put (Separator);
    end;
 
    procedure Put_Probability_Header (Width : Natural; Separator : String) is
-      use Ada.Text_IO;
       use Ada.Strings.Fixed;
    begin
-      Put (Tail ("Sample-Count", Width));
+      Put (Tail ("Count", Width));
       Put (Separator);
-      Deviations.Put_Kind (Width, Separator);
+      Deviations.Kinds.Put_Tail (Width, ' ', Separator);
       Put (Tail ("Likelihood", Width));
       Put (Separator);
    end;
