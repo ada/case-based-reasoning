@@ -30,19 +30,16 @@ package body CBR.Distances is
       return abs (X1 - X2) / (abs X1 + abs X2);
    end;
 
-
    function Tanh (X1, X2 : Float) return Float is
       use Ada.Numerics.Elementary_Functions;
    begin
       return abs Tanh (X1 - X2);
    end;
 
-
    function Tan (X1, X2 : Float) return Float is
       use Ada.Numerics.Elementary_Functions;
    begin
       return  Tan (abs (X1 - X2));
    end;
-
 
 end;

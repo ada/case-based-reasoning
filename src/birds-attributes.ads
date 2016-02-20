@@ -8,11 +8,8 @@ package Birds.Attributes is
       procedure Put_Tail is new Texts.Generic_Put_Enum_Tail (Kinds.Kind);
    end;
 
-
    type Unconstrained_Vector is array (Kinds.Kind range <>) of Float;
    subtype Vector is Unconstrained_Vector (Kinds.Kind);
-
-
 
    procedure Put is new Texts.Generic_Put_Digit_Vector (Float, Kinds.Kind, Unconstrained_Vector);
 
