@@ -1,4 +1,5 @@
 with Ada.Strings.Fixed;
+with Ada.Float_Text_IO;
 
 package body Texts is
 
@@ -41,6 +42,27 @@ package body Texts is
          T.Put (E, Fore, Aft, Exp);
          Put (Separator);
       end loop;
+   end;
+
+
+   procedure Generic_Read_Float_List (Name : String; Count : Natural; Destination : out Vector; Min : out Float; Max : out Float) is
+      use Ada.Float_Text_IO;
+      File : File_Type;
+      Value : Float;
+   begin
+      Min := Float'Last;
+      Max := Float'First;
+      Open (File, In_File, Name);
+      loop
+         exit when Count = 0;
+         exit when Positive (Line (File)) >= Count;
+         exit when End_Of_Page (File);
+         Get (File, Value);
+         Max := Float'Max (Max, Value);
+         Min := Float'Min (Min, Value);
+         Set (Positive (Line (File)), Value, Destination);
+      end loop;
+      Close (File);
    end;
 
 

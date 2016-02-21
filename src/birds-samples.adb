@@ -1,27 +1,18 @@
 with Ada.Text_IO;
-with Ada.Float_Text_IO;
 with Ada.Integer_Text_IO;
+with Texts;
 
 package body Birds.Samples is
 
+
    procedure Read_Vector (Name : String; A : Attributes.Kinds.Kind; X : out Vector; Min : out Float; Max : out Float) is
-      use Ada.Text_IO;
-      use Ada.Float_Text_IO;
-      File : File_Type;
+      procedure Set (Index : Positive; Value : Float; Destination : out Vector) is
+      begin
+         Destination (Index).Attribute (A) := Value;
+      end;
+      procedure Read is new Texts.Generic_Read_Float_List (Vector, Set);
    begin
-      Min := Float'Last;
-      Max := Float'First;
-      Open (File, In_File, Name);
-      for I in X'Range loop
-         declare
-            V : Float renames X (I).Attribute (A);
-         begin
-            Get (File, V);
-            Max := Float'Max (Max, V);
-            Min := Float'Min (Min, V);
-         end;
-      end loop;
-      Close (File);
+      Read (Name, X'Length, X, Min, Max);
    end;
 
    procedure Read_Vector_Kind (Name : String; X : out Vector) is

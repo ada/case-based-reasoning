@@ -28,6 +28,9 @@ package Texts is
       type Vector is array (Index range <>) of Element;
    procedure Generic_Put_Digit_Vector (Item : Vector; Fore : Field; Aft : Field; Exp : Field; Separator : String);
 
-
+   generic
+      type Vector (<>) is limited private;
+      with procedure Set (Index : Positive; Value : Float; Destination : out Vector);
+   procedure Generic_Read_Float_List (Name : String; Count : Natural; Destination : out Vector; Min : out Float; Max : out Float);
 
 end;
