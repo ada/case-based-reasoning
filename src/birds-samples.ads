@@ -11,9 +11,9 @@ package Birds.Samples is
    type Vector is array (Integer range <>) of Sample;
 
 
-   procedure Read_Vector (Name : String; A : Attributes.Kinds.Kind; X : out Vector; Min : out Float; Max : out Float);
-   procedure Read_Vector_Kind (Name : String; X : out Vector);
-   procedure Read_Vector_Normalized (Name : String; A : Attributes.Kinds.Kind; X : out Vector);
-   procedure Normalize_Vector (A : Attributes.Kinds.Kind; Min, Max : Float; X : in out Vector);
+   procedure Read_Vector (Name : String; Kind : Attributes.Kinds.Kind; Destination : out Vector; Min : out Float; Max : out Float);
+   procedure Read_Vector_Kind (Name : String; Destination : out Vector);
+   procedure Read_Vector_Normalized (Name : String; Kind : Attributes.Kinds.Kind; Destination : out Vector);
+   procedure Normalize_Vector (Kind : Attributes.Kinds.Kind; Min, Max : Float; Destination : in out Vector);
 
 end;
