@@ -8,7 +8,7 @@ package body Birds.Samples is
    procedure Read_Vector (Name : String; Kind : Attributes.Kinds.Kind; Destination : out Vector; Min, Max : out Float) is
       procedure Set (Index : Positive; Value : Float; Destination : out Vector) is
       begin
-         Destination (Index).Attribute (Kind) := Value;
+         Destination (Destination'First + Index - 1).Attribute (Kind) := Value;
       end;
       procedure Read is new Texts.Generic_Read_Float_List (Vector, Set);
    begin
