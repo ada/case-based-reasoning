@@ -6,9 +6,9 @@ package body Birds.Samples is
 
 
    procedure Read_Vector (Name : String; Kind : Attributes.Kinds.Kind; Destination : out Vector; Min, Max : out Float) is
-      procedure Set (Index : Positive; Value : Float; Destination : out Vector) is
+      procedure Set (I : Positive; Value : Float; Destination : out Vector) is
       begin
-         Destination (Destination'First + Index - 1).Attribute (Kind) := Value;
+         Destination (Destination'First + I - 1).Attribute (Kind) := Value;
       end;
       procedure Read is new Texts.Generic_Read_Float_List (Vector, Set);
    begin
@@ -22,9 +22,9 @@ package body Birds.Samples is
       Value : Integer;
    begin
       Open (File, In_File, Name);
-      for Index in Destination'Range loop
+      for I in Destination'Range loop
          Get (File, Value);
-         Destination (Index).Bird := Birds.Kinds.Kind'Enum_Val (Value);
+         Destination (I).Bird := Birds.Kinds.Kind'Enum_Val (Value);
       end loop;
       Close (File);
    end;
