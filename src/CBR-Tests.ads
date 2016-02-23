@@ -9,4 +9,10 @@ package CBR.Tests is
    procedure KNN (S : Sample; X : Sample_Array; Y : out Neighbor_Array);
 
 
+   generic
+      type Index is (<>);
+      Unknown : Index;
+      type Index_Array is array (Integer range <>) of Index;
+   procedure KNN_Summery (X : Index_Array; Y : out Index_Array);
+
 end;

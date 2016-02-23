@@ -114,15 +114,35 @@ begin
       use Ada.Integer_Text_IO;
       use Ada.Text_IO;
       use Ada.Strings.Fixed;
+      procedure KNN_Summery is new CBR.Tests.KNN_Summery (Birds.Kinds.Kind, Birds.Kinds.Unknown, Birds.Kinds.Vector);
+      L : Birds.Kinds.Vector (Nearest'Range) := (others => Birds.Kinds.Unknown);
+      K : Birds.Kinds.Vector (Nearest'Range) := (others => Birds.Kinds.Unknown);
    begin
-      for E of Nearest loop
-         Put (E, 4);
+      for I in Nearest'Range loop
+         L (I) := Asset_Vector (Nearest (I)).Bird;
+         --Put (Nearest (I), 4);
+         --Put (" ");
+         --Put (Head (Asset_Vector (Nearest (I)).Bird'Img, 8));
+      end loop;
+
+      KNN_Summery (L, K);
+
+
+      Put (Head ("List", 8));
+      Put (Tail ("K", 4));
+      Put (" ");
+      Put (Head ("Yield", 8));
+      New_Line;
+      for I in Nearest'Range loop
+         Put (Head (L (I)'Img, 8));
+         Put (I, 4);
          Put (" ");
-         Put (Head (Asset_Vector (E).Bird'Img, 8));
+         Put (Head (K (I)'Img, 8));
+         New_Line;
       end loop;
    end;
 
-
+   Ada.Text_IO.New_Line (4);
 
 end;
 
