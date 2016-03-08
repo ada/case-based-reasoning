@@ -1,29 +1,22 @@
 function [ locs ] = FrequencyPeaks( audio, fs, EnablePlotting)
 
+%figure(1);
+%clf;
+%hold on;
+%axis([0 1E4 -80 -20])
+
 [pxx, f, pxxc] = periodogram(audio, rectwin(length(audio)), length(audio), fs, 'power');
 pxx = 10*log10(pxx);
-[pks,locs] = findpeaks(pxx, f, 'MinPeakProminence',10, 'MinPeakDistance',100, 'MinPeakHeight',-60, 'SortStr', 'descend');
 
-if length(pks) == 0
-    locs(1:5) = 0;
-end
+%plot(f, pxx);
 
-if length(pks) == 1
-    locs(2:5) = 0;
-end
+pks = [];
+locs = [];
 
-if length(pks) == 2
-    locs(3:5) = 0;
-end
-
-if strcmp(EnablePlotting,'EnablePlotting') == 1
-    figure(1);
-    
-    clf;
-    hold on;
-    plot(f, pxx);
-    plot(locs, pks, 'o');
-    axis([0 1E4 -80 -20])
+MinPeakHeight = -60;
+if max(pxx) > MinPeakHeight
+    [pks,locs] = findpeaks(pxx, f, 'MinPeakProminence',30, 'MinPeakDistance',100, 'MinPeakHeight', MinPeakHeight, 'SortStr', 'descend');
+    %plot(locs, pks, 'o');
 end
 
 end
