@@ -5,11 +5,19 @@ point_array = zeros (10000000, 3);
 
 fnames = dir('*.wav');
 id = 0;
+<<<<<<< HEAD
 step = 10000;
     
 for j = fnames 
     id = id + 1; 
     name = j.name
+=======
+step = 5000;
+    
+for i = fnames 
+    id = id + 1; 
+    name = i.name;
+>>>>>>> origin/master
     [y,Fs] = audioread(name);
 
     % Convert stereo to mono
@@ -41,6 +49,15 @@ for j = fnames
     
 end; 
 
+<<<<<<< HEAD
+=======
+%%
+
+
+
+
+
+>>>>>>> origin/master
 
 %%
 figure(1);
