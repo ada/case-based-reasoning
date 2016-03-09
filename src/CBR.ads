@@ -1,2 +1,0 @@
-package CBR is
-end;
