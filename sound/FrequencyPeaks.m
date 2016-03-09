@@ -1,4 +1,4 @@
-function [ locs ] = FrequencyPeaks( audio, fs, EnablePlotting)
+function [ locs ] = FrequencyPeaks( audio, fs, MinPeakHeight, MinPeakProminence, MinPeakDistance)
 
 %figure(1);
 %clf;
@@ -8,16 +8,19 @@ function [ locs ] = FrequencyPeaks( audio, fs, EnablePlotting)
 [pxx, f, pxxc] = periodogram(audio, rectwin(length(audio)), length(audio), fs, 'power');
 pxx = 10*log10(pxx);
 
+pxx = smooth (pxx);
+
 %plot(f, pxx);
 
 pks = [];
 locs = [];
 
-MinPeakHeight = -60;
 if max(pxx) > MinPeakHeight
-    [pks,locs] = findpeaks(pxx, f, 'MinPeakProminence',30, 'MinPeakDistance',100, 'MinPeakHeight', MinPeakHeight, 'SortStr', 'descend');
+    [pks,locs] = findpeaks(pxx, f, 'MinPeakProminence', MinPeakProminence, 'MinPeakDistance',MinPeakDistance, 'MinPeakHeight', MinPeakHeight, 'SortStr', 'descend');
     %plot(locs, pks, 'o');
 end
+
+%pause
 
 end
 
