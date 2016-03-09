@@ -12,7 +12,7 @@ package body CBR.Generic_KNN is
       S : array (Class) of Natural := (others => 0);
       M : Integer := -1;
       T : Class := Unknown_Class;
-      D : KNN_Common_Distance (Class) := (others => 0.0);
+      D : Class_Distance (Class) := (others => 0.0);
    begin
       for I in X'Range loop
          D (X (I).Kind) := D (X (I).Kind) + X (I).Distance;
@@ -29,7 +29,7 @@ package body CBR.Generic_KNN is
    end;
 
 
-   procedure Collective_Vote (Item : KNN_Block_Array; Result : in out KNN_Vote_Array) is
+   procedure Elect (Item : KNN_Block_Array; Result : in out Class_Vote_Array) is
    begin
       for I in Item'Range loop
          Result (I) (Item (I).Kind) := Result (I) (Item (I).Kind) + 1;
@@ -44,7 +44,7 @@ package body CBR.Generic_KNN is
    begin
       Put (Head (Item.Kind'Img, 4));
       for E of Item.Distance (Class'Succ (Class'First) .. Class'Last) loop
-         Put (E, 5, 5, 0);
+         Put (E, 3, 6, 0);
       end loop;
    end;
 
@@ -53,7 +53,8 @@ package body CBR.Generic_KNN is
       use Ada.Integer_Text_IO;
    begin
       for I in Item'Range loop
-         Put (I - Item'First, 3);
+         Put (I - Item'First + 1, 3);
+         Put ("|");
          Put (Item (I));
          New_Line;
       end loop;
@@ -67,12 +68,13 @@ package body CBR.Generic_KNN is
    begin
       for I in Item'Range loop
          Put (Item (I).Kind, 3);
+         Put ("|");
          Put (Item (I).Distance, 3, 6, 0);
          New_Line;
       end loop;
    end;
 
-   procedure Put (Item : KNN_Vote) is
+   procedure Put (Item : Class_Vote) is
       use Ada.Text_IO;
       use Ada.Float_Text_IO;
       use Ada.Integer_Text_IO;
@@ -82,7 +84,7 @@ package body CBR.Generic_KNN is
       end loop;
    end;
 
-   procedure Put (Item : KNN_Vote_Array) is
+   procedure Put (Item : Class_Vote_Array) is
       use Ada.Integer_Text_IO;
       use Ada.Text_IO;
    begin
