@@ -2,7 +2,6 @@
 *.ali
 *.exe
 *.bexch
-*.bat
 *.cgpr
 *.lexch
 *.db
