@@ -87,7 +87,7 @@ package body CBR.Generic_Samples is
       use Ada.Strings.Fixed;
    begin
       for E of Item loop
-         Put (E, 2, 2, 0);
+         Put (E, 2, 5, 0);
          Put (" ");
       end loop;
    end;
@@ -115,35 +115,36 @@ package body CBR.Generic_Samples is
       Put (Tail ("Class", 5));
       Put ("|");
       for I in Dimension loop
-         Put (I, 4);
-         Put ("F");
+         Put (Tail ("Fea", 3));
+         Put (I, 2);
          Put (" ");
       end loop;
       Put ("|");
-      Put (Tail ("Dist", 8));
+      Put (Tail ("Distance", 8));
       Put (" ");
-      Put (Tail ("K", 5));
+      Put (Tail ("KNear", 5));
       Put (" ");
-      Put (Tail ("Lead", 5));
+      Put (Tail ("LeadC", 5));
       Put ("|");
       for I in Class loop
-         Class_IO.Put (I, 4);
-         Put ("C");
+         Put (Tail ("ClassD", 6));
+         Class_IO.Put (I, 2);
          Put (" ");
       end loop;
       Put ("|");
       for I in Class loop
-         Class_IO.Put (I, 4);
-         Put ("V");
+         Put (Tail ("IV", 3));
+         Class_IO.Put (I, 2);
          Put (" ");
       end loop;
       Put ("|");
       for I in Class loop
-         Class_IO.Put (I, 4);
-         Put ("V");
+         Put (Tail ("LV", 3));
+         Class_IO.Put (I, 2);
          Put (" ");
       end loop;
       New_Line;
+      Put_Line (Ada.Strings.Fixed."*" (200, "-"));
       for I in Item'Range loop
          Put (Item (I).Time, 5);
          Put (" ");

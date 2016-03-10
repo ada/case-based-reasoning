@@ -20,7 +20,6 @@ procedure Main is
       Samples.Summarize (X);
       Samples.Elect (X, El);
       New_Line;
-      Put_Line ("Proccessed");
       Samples.Put (X (X'First .. X'First + 10), El);
    end;
 
