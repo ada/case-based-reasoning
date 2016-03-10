@@ -40,8 +40,6 @@ package body CBR.Generic_Samples is
       Last := Last - 1;
    end;
 
-
-
    procedure Summarize (Item : in out Sample_Array) is
       S : Class_Count (Class) := (others => 0);
       M : Integer := -1;
@@ -84,7 +82,6 @@ package body CBR.Generic_Samples is
    procedure Put (Item : Class_Distance) is
       use Ada.Float_Text_IO;
       use Ada.Text_IO;
-      use Ada.Strings.Fixed;
    begin
       for E of Item loop
          Put (E, 2, 5, 0);
@@ -93,9 +90,7 @@ package body CBR.Generic_Samples is
    end;
 
    procedure Put (Item : Class_Count) is
-      use Ada.Float_Text_IO;
       use Ada.Text_IO;
-      use Ada.Strings.Fixed;
       use Ada.Integer_Text_IO;
    begin
       for E of Item loop
