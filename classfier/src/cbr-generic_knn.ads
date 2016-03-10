@@ -26,15 +26,15 @@ package CBR.Generic_KNN is
 
    type KNN_Block_Array is array (Integer range <>) of KNN_Block;
 
-   type Class_Vote is array (Class range <>) of Natural;
-   type Class_Vote_Array is array (Integer range <>) of Class_Vote (Class);
+   type Election is array (Class range <>) of Natural;
+   type K_Election is array (Integer range <>) of Election (Class);
 
-   procedure Make_Summery (X : Distance_Info_Array; Y : out KNN_Block_Array);
-   procedure Elect (Item : KNN_Block_Array; Result : in out Class_Vote_Array);
+   procedure Summarize (X : Distance_Info_Array; Y : out KNN_Block_Array);
+   procedure Elect (Item : KNN_Block_Array; Result : in out K_Election);
 
    procedure Put (Item : KNN_Block_Array);
    procedure Put (Item : Distance_Info_Array);
-   procedure Put (Item : Class_Vote);
-   procedure Put (Item : Class_Vote_Array);
+   procedure Put (Item : Election);
+   procedure Put (Item : K_Election);
 
 end;

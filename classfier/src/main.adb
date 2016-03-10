@@ -11,26 +11,26 @@ procedure Main is
    package KNN is new CBR.Generic_KNN (Class => Class, Unknown_Class => 0);
    procedure Swap is new Sortings.Generic_Swap (Samples.Sample);
 
-   procedure Begin_Compare (X : Samples.Sample_Array; A : Samples.Feature_Vector; K_Vote : in out KNN.Class_Vote_Array) is
+   procedure Begin_Compare (X : Samples.Sample_Array; A : Samples.Feature_Vector; K_Vote : in out KNN.K_Election) is
       use Ada.Text_IO;
       D : KNN.Distance_Info_Array (X'Range);
       W : constant Samples.Feature_Vector := (others => 1.0);
       K : KNN.KNN_Block_Array (D'Range);
    begin
-      New_Line;
-      Put_Line ("Distance");
       for I in D'Range loop
          D (I).Kind := X (I).Kind;
          D (I).Distance := CBR.Distances.Euclidean2 (W, X (I).Point, A);
       end loop;
+      New_Line;
+      Put_Line ("Euclidean2");
       KNN.Put (D);
       New_Line;
-      Put_Line ("KNN.Sort (D)");
+      Put_Line ("KNN.Sort");
       KNN.Sort (D);
       KNN.Put (D);
       New_Line;
-      Put_Line ("KNN.Make_Summery");
-      KNN.Make_Summery (D, K);
+      Put_Line ("KNN.Summarize");
+      KNN.Summarize (D, K);
       KNN.Put (K);
       New_Line;
       Put_Line ("KNN.Elect");
@@ -39,7 +39,7 @@ procedure Main is
 
    procedure Begin_Compare (X : Samples.Sample_Array; A : Samples.Sample_Array) is
       use Ada.Text_IO;
-      K_Vote : KNN.Class_Vote_Array (X'Range) := (others => (others => 0));
+      K_Vote : KNN.K_Election (X'Range) := (others => (others => 0));
    begin
       New_Line;
       Put_Line ("Begin_Compare");
