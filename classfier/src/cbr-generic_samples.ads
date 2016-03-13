@@ -2,11 +2,10 @@ with Sortings;
 
 generic
    type Class is range <>;
-   Number_Of_Dimension : Natural;
+   type Dimension is range <>;
    Unknown_Class : Class;
 package CBR.Generic_Samples is
-   subtype Dimension is Integer range 1 .. Number_Of_Dimension;
-   subtype Feature_Vector is Float_Array (Dimension);
+   type Feature_Vector is array (Dimension) of Float;
    subtype Dimension_Count is Integer range 1 .. Feature_Vector'Length;
    subtype Distance_Quantity is Float range 0.0 .. Float'Last;
    type Class_Distance is array (Class range <>) of Distance_Quantity;
@@ -23,7 +22,6 @@ package CBR.Generic_Samples is
    type Sample_Array is array (Integer range <>) of Sample;
 
    type Election is record
-      Vote : Class_Count (Class) := (others => 0);
       Leading_Vote : Class_Count (Class) := (others => 0);
    end record;
    type Election_Array is array (Integer range <>) of Election;

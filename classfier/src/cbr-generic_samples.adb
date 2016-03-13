@@ -7,6 +7,7 @@ with Ada.Integer_Text_IO;
 package body CBR.Generic_Samples is
 
    package Class_IO is new Ada.Text_IO.Integer_IO (Class);
+   package Dimension_IO is new Ada.Text_IO.Integer_IO (Dimension);
 
    procedure Read_Point (Name : String; Dim : Dimension; Last : out Integer; Result : out Sample_Array) is
       use Ada.Text_IO;
@@ -64,7 +65,6 @@ package body CBR.Generic_Samples is
    procedure Elect (Item : Sample_Array; Result : in out Election_Array) is
    begin
       for I in Item'Range loop
-         Result (I).Vote (Item (I).Kind) := Result (I).Vote (Item (I).Kind) + 1;
          Result (I).Leading_Vote (Item (I).Leading_Kind) := Result (I).Leading_Vote (Item (I).Leading_Kind) + 1;
       end loop;
    end;
@@ -106,29 +106,23 @@ package body CBR.Generic_Samples is
       use Ada.Integer_Text_IO;
    begin
       Put (Tail ("Time", 5));
-      Put (" ");
+      Put ("|");
       Put (Tail ("Class", 5));
       Put ("|");
       for I in Dimension loop
          Put (Tail ("Fea", 3));
-         Put (I, 2);
+         Dimension_IO.Put (I, 2);
          Put (" ");
       end loop;
       Put ("|");
       Put (Tail ("Distance", 8));
-      Put (" ");
+      Put ("|");
       Put (Tail ("KNear", 5));
-      Put (" ");
+      Put ("|");
       Put (Tail ("LeadC", 5));
       Put ("|");
       for I in Class loop
          Put (Tail ("ClassD", 6));
-         Class_IO.Put (I, 2);
-         Put (" ");
-      end loop;
-      Put ("|");
-      for I in Class loop
-         Put (Tail ("IV", 3));
          Class_IO.Put (I, 2);
          Put (" ");
       end loop;
@@ -142,20 +136,18 @@ package body CBR.Generic_Samples is
       Put_Line (Ada.Strings.Fixed."*" (200, "-"));
       for I in Item'Range loop
          Put (Item (I).Time, 5);
-         Put (" ");
+         Put ("|");
          Class_IO.Put (Item (I).Kind, 5);
          Put ("|");
          Put (Item (I).Point);
          Put ("|");
          Put (Item (I).Distance, 2, 5, 0);
-         Put (" ");
+         Put ("|");
          Put (Item (I).K, 5);
-         Put (" ");
+         Put ("|");
          Class_IO.Put (Item (I).Leading_Kind, 5);
          Put ("|");
          Put (Item (I).Leading_Distance);
-         Put ("|");
-         Put (Item2 (I).Vote);
          Put ("|");
          Put (Item2 (I).Leading_Vote);
          New_Line;
