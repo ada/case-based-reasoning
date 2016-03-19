@@ -4,11 +4,40 @@ with Ada.Command_Line;
 with CBR;
 with CBR.Distances;
 with Ada.Float_Text_IO;
+with Ada.Integer_Text_IO;
 
-procedure Main is
+procedure Main_KNN is
 
    use Ada.Text_IO;
+   use Ada.Integer_Text_IO;
    use Ada.Command_Line;
+
+
+   package Arg_Index_Config is
+      Distance : constant Positive := 1;
+      Asset_Count_Max : constant Positive := 2;
+      Class_Count : constant Positive := 3;
+      Class_File_Name : constant Positive := 4;
+      Dimension_Count : Positive := 5;
+      Dimension_File_Names : Positive := 5;
+   end;
+
+
+
+   package Arguments is
+      function Next return Natural;
+      I : Positive := 1;
+   end;
+
+   package body Arguments is
+      function Next return Natural is
+         use Ada.Command_Line;
+         Name : constant String := Argument (I);
+      begin
+         I := I + 1;
+         return Natural'Value (Name);
+      end;
+   end;
 
 
    function Get_Weighted_Distance_Function return CBR.Weighted_Distance_Function is
@@ -67,6 +96,15 @@ procedure Main is
 begin
 
    Put_Line ("");
+
+   for I in 1 .. Ada.Command_Line.Argument_Count loop
+      Put (I, 3);
+      Put (" ");
+      Put (Argument (I));
+      New_Line;
+   end loop;
+
+   New_Line;
 
    Test1;
 

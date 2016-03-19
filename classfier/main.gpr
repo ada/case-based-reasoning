@@ -2,7 +2,7 @@ project Main is
 
   for Languages use ("ada");
   for Source_Dirs use ("src");
-  for Main use ("main.adb");
+  for Main use ("main_knn.adb", "main_normalize.adb");
   for Object_Dir use "obj";
   for Exec_Dir use "bin";
 
@@ -19,6 +19,8 @@ project Main is
 
   package Builder is
     for Default_Switches ("ada") use ("-v", "-f", "-d");
+    for Executable ("main_knn.adb") use "knn";
+    for Executable ("main_normalize.adb") use "normalize";
   end Builder;
 
   -- "-gnatwa"
