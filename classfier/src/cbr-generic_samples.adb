@@ -15,14 +15,13 @@ package body CBR.Generic_Samples is
       F : File_Type;
    begin
       Open (F, In_File, Name);
-      Last := Result'First;
+      Last := Result'First - 1;
       loop
          exit when End_Of_File (F);
-         exit when Last > Result'Last;
-         Get (F, Result (Last).Point (Dim));
          Last := Last + 1;
+         Get (F, Result (Last).Point (Dim));
+         exit when Last = Result'Last;
       end loop;
-      Last := Last - 1;
    end;
 
    procedure Read_Class (Name : String; Last : out Integer; Result : out Sample_Array) is
@@ -30,15 +29,14 @@ package body CBR.Generic_Samples is
       F : File_Type;
    begin
       Open (F, In_File, Name);
-      Last := Result'First;
+      Last := Result'First - 1;
       loop
          exit when End_Of_File (F);
-         exit when Last > Result'Last;
+         Last := Last + 1;
          Class_IO.Get (F, Result (Last).Kind);
          Result (Last).Time := Last;
-         Last := Last + 1;
+         exit when Last = Result'Last;
       end loop;
-      Last := Last - 1;
    end;
 
    procedure Summarize (Item : in out Sample_Array) is

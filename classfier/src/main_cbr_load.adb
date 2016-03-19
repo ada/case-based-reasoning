@@ -37,22 +37,25 @@ procedure Main_CBR_Load is
    end;
 
    X : Samples.Sample_Array (1 .. Maximum_Number_Of_Assets);
-   Last : Integer;
+   Last : Integer := Maximum_Number_Of_Assets;
 
 begin
 
    declare
       use Ada.Text_IO;
       use Ada.Integer_Text_IO;
+      Local_Last : Integer;
    begin
       for I in Dimension loop
          Put ("Loading ");
          Put (Get_Dimension_File_Name (I));
          New_Line;
-         Samples.Read_Point (Get_Dimension_File_Name (I), I, Last, X);
+         Samples.Read_Point (Get_Dimension_File_Name (I), I, Local_Last, X);
+         Last := Integer'Min (Last, Local_Last);
       end loop;
 
-      Samples.Read_Class (Class_File_Name, Last, X);
+      Samples.Read_Class (Class_File_Name, Local_Last, X);
+      Last := Integer'Min (Last, Local_Last);
 
       for I in 1 .. Number_Of_Samples loop
          Put ("Swapping ");
