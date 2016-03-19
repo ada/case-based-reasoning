@@ -12,41 +12,20 @@ procedure Main_KNN is
    use Ada.Integer_Text_IO;
    use Ada.Command_Line;
 
-
-   package Arg_Index_Config is
-      Distance : constant Positive := 1;
-      Asset_Count_Max : constant Positive := 2;
-      Class_Count : constant Positive := 3;
-      Class_File_Name : constant Positive := 4;
-      Dimension_Count : Positive := 5;
-      Dimension_File_Names : Positive := 5;
-   end;
-
-
-
-   package Arguments is
-      function Next return Natural;
-      I : Positive := 1;
-   end;
-
-   package body Arguments is
-      function Next return Natural is
-         use Ada.Command_Line;
-         Name : constant String := Argument (I);
-      begin
-         I := I + 1;
-         return Natural'Value (Name);
-      end;
-   end;
-
-
    function Get_Weighted_Distance_Function return CBR.Weighted_Distance_Function is
       Name : constant String := Argument (1);
    begin
-      if Name = "Euclidean2" then
+      if Name = "Euclidean1" then
+         return CBR.Distances.Euclidean1'Access;
+      elsif Name = "Euclidean2" then
          return CBR.Distances.Euclidean2'Access;
+      elsif Name = "Canberra" then
+         return CBR.Distances.Canberra'Access;
+      elsif Name = "Manhattan" then
+         return CBR.Distances.Manhattan'Access;
+      else
+         return null;
       end if;
-      return null;
    end;
 
    Maximum_Number_Of_Assets : constant Natural := Natural'Value (Argument (2));
