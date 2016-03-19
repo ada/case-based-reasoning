@@ -8,7 +8,7 @@ procedure Main_CBR_Load is
 
    subtype Dimension is Positive range 1 .. Number_Of_Dimensions;
    subtype Class is Natural range 0 .. Number_Of_Classes;
-   package Samples is new CBR.Generic_Samples (Class => Class, Dimension => Dimension, Unknown_Class => 0);
+   package Samples is new CBR.Generic_Samples (Class => Class, Dimension => Dimension, Unknown_Class => Class'First);
    procedure Swap is new Sortings.Generic_Swap (Samples.Sample);
 
    procedure Begin_Compare (X : in out Samples.Sample_Array; El : in out Samples.Election_Array; A : Samples.Feature_Vector) is
@@ -21,7 +21,7 @@ procedure Main_CBR_Load is
       Samples.Summarize (X);
       Samples.Elect (X, El);
       New_Line;
-      Samples.Put (X (X'First .. X'First + 10), El);
+      Samples.Put (X (X'First .. X'Last), El);
    end;
 
    procedure Begin_Compare (X : in out Samples.Sample_Array; A : Samples.Sample_Array) is

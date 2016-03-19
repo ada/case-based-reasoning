@@ -74,7 +74,7 @@ package body CBR.Generic_Samples is
       use Ada.Text_IO;
    begin
       for I in Item'Range loop
-         Put (Item (I), 2, 2, 0);
+         Put (Item (I), 1, 3);
          Put (" ");
       end loop;
    end;
@@ -84,7 +84,7 @@ package body CBR.Generic_Samples is
       use Ada.Text_IO;
    begin
       for E of Item loop
-         Put (E, 2, 5, 0);
+         Put (E, 2, 3);
          Put (" ");
       end loop;
    end;
@@ -110,19 +110,19 @@ package body CBR.Generic_Samples is
       Put (Tail ("Class", 5));
       Put ("|");
       for I in Dimension loop
-         Put (Tail ("Fea", 3));
+         Put (Tail ("Feature", 7));
          Dimension_IO.Put (I, 2);
          Put (" ");
       end loop;
       Put ("|");
-      Put (Tail ("Distance", 8));
+      Put (Tail ("Distance", 9));
       Put ("|");
-      Put (Tail ("KNear", 5));
+      Put (Tail ("K", 5));
       Put ("|");
-      Put (Tail ("LeadC", 5));
+      Put (Tail ("KN", 5));
       Put ("|");
       for I in Class loop
-         Put (Tail ("ClassD", 6));
+         Put (Tail ("Distance", 8));
          Class_IO.Put (I, 2);
          Put (" ");
       end loop;
@@ -141,7 +141,7 @@ package body CBR.Generic_Samples is
          Put ("|");
          Put (Item (I).Point);
          Put ("|");
-         Put (Item (I).Distance, 2, 5, 0);
+         Put (Item (I).Distance, 1, 3);
          Put ("|");
          Put (Item (I).K, 5);
          Put ("|");
