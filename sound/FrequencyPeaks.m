@@ -1,4 +1,4 @@
-function [ locs ] = FrequencyPeaks( audio, fs, MinPeakHeight, MinPeakProminence, MinPeakDistance)
+function [ locs, area ] = FrequencyPeaks( audio, fs, MinPeakHeight, MinPeakProminence, MinPeakDistance)
 
 %figure(1);
 %clf;
@@ -7,6 +7,8 @@ function [ locs ] = FrequencyPeaks( audio, fs, MinPeakHeight, MinPeakProminence,
 
 [pxx, f, pxxc] = periodogram(audio, rectwin(length(audio)), length(audio), fs, 'power');
 pxx = 10*log10(pxx);
+
+area = sum(pxx.^2);
 
 pxx = smooth (pxx);
 
