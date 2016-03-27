@@ -1,0 +1,20 @@
+\section{Summary and conclusions}
+The developed classifier met all the requirements which were validated
+by the various tests performed. Audio files of eight different birds has been
+acquired while the birds are singing. A moving window
+with a predefined boundaries scans the signal in the time domain and a tranformation
+from the time-domain to frequency domain has been conducted in order to extract features.
+The two frequencies with the highest amplutide have been extracted for each frame.
+These two features together with the class constitute the database for CBR.
+
+The CBR written in the Ada programming language uses the K nearest approach to
+find the most similar cases and the user can specify the similarity formula with ease.
+The leave-one-out cross-validation method has been used for the validation of the CBR system.
+
+A natural evolution of this classifier would be to use more appropriate features
+and adjusting the feature weights accordingly. Also remvoing duplicate data from
+the the database would increase the precision of the system and when that happens
+the user can test for classification of other animals such as whales or dogs.
+
+With higher reliability, this system could be used for people with hearing impairment
+in order to hear the sound of different subjects by using vibration motors. 
