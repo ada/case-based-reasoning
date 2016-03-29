@@ -7,7 +7,7 @@ The first set of features consist of mel-frequency ceptral coefficients together
 their first and seconds order time derivaties. The seconds set consists of line
 spectral frequencies, spectral flux and zero crossing rate. Their test shows that
 the second set of features were superior to classical MFCC coefficients for general
-sound patter recognition and comparable for speech recognition.
+sound patter recognition and comparable for speech recognition.\\
 
 Jijung Deng et. al.\cite{6138136} created a fingerprinting system based on spectral energy
 structure of the audio signal. Audi fingerprint is a compact unique content-based
@@ -19,5 +19,49 @@ At last a sub-fingerprint of 2*(number of subbands-1) bits in binary form will
 be produced from each frame of audio signal. The usage of inverted file
 indexing technique combined with hash tables increased the speed of retrieval
 process for the matching algorithm. Their preliminary experimental results
-suggest that this method can work well
-in the application of broadcast monitoring.
+suggest that this method can work well in the application of broadcast
+monitoring.\\
+
+
+Identifying sounds using computers is not something new, the idea has been
+around for a long time. So several different methods for this has been
+developed, in this project Periodogram was used for feature extraction and
+Case Based Reasoning was used for the decision making part.\\
+
+This paper from 2014 \cite{danne1} instead decided to use Spectrogram combined with
+Angular and Radial Transform (ART) for their feature extraction part. A
+Spectrogram is a 3D representation of a sound file. This gives a lot of
+potential features to extract but it is a lot harder to find and extract
+these features than from a 2D graph. They solve this by using ART which is a
+moment based image description method. This is then adopted in MPEG-7 as a
+region-based shape descriptor, this gives an efficient way of expressing pixel
+distribution in a 3D region. Essentially the 3D graph will instead be thought
+of as a 3D image and this will allow the ART to analyze the shape and pixels,
+this can be used to extract the features from the spectrogram. This is then
+applied much in the same way we did with the sound file being analyzed with a
+texture window creating overlapping frames where the features are extracted in
+every frame. For their decision making they instead use Gaussian Mixture Models
+(GMM) which is parametric probability density function. This method differs
+from CBR in that you don't build a library of different cases and then compare
+the current case to your library. Instead a GMM needs to be trained beforehand
+and then uses weights to help in the decision making. In this case they used
+Expectation-Maximization algorithms, each bird species will be represented as
+a combination of Gaussian Component probability density functions.\\
+
+Another paper that is not directly related to the work done in this project,
+but is very important to the area of signal identification as a whole is \cite{1566472}.
+Reconstruction of incomplete spectrograms for robust speech recognition, this
+paper details a method for gaining a more robust recognition of speech when the
+sound is corrupted by noise. When a signal is corrupted by noise some features
+may be lost, normally a program would be trained with cases that have a similar
+noise level. This methods ignore the lost features and use the remaining to
+find the most likely match, this is by no means a foolproof method and this
+only works with stationary noise. Non-stationary noise is even more error prone.
+ This paper instead talks about the reconstruction of the corrupted data by
+ estimating the missing components and after the data has been estimated the
+ signal can be reconstructed and then classified with the speech recognition
+ program. The paper details several different methods for reconstructing
+ incomplete or corrupted spectrograms, either by treating the missing regions
+ as completely unknown or treating them as unknown but bounded. Several
+ different methods are introduced but the two most effective ones are cluster
+ marginal reconstruction and covariance joint reconstruction.\\
