@@ -1,8 +1,41 @@
 \section{Method}
-To make a bird recognition program two main parts are needed. First a feature extraction method that can analyze and extract the desired features from a sound file of a bird singing. Secondly a decision making algorithm that can take the extracted features and classify which bird that sings in the sound file. The method choosen feature extraction was Periodogram (spectral density estimation) and CBR (Case Based Reasoning) was used for the decision making, CBR was chossen specifically because it’s a tried and true decision making method. 
+To make a bird recognition program two main parts are needed. First a feature
+extraction method that can analyze and extract the desired features from a
+sound file of a bird singing. Secondly a decision making algorithm that can
+take the extracted features and classify which bird that sings in the sound
+file. The method choosen feature extraction was Periodogram (spectral density
+estimation) and CBR (Case Based Reasoning) was used for the decision making,
+CBR was chossen specifically because it’s a tried and true decision making method.
 
-Periodogram
-Periodogram was used to step through the sound file one frame at a time and then get the frequencies and corresponding amplitude in each frame. This was done using matlab, the sound file is first loaded into the program and the frame size is set depending on the length of the sound file, the step size is preset. After that the program basically uses the “Periodogram” function already present in matlab to create a periodogram of the frame illustrated in Fig.1. After that the “Findpeak” function is used to find the two highest peaks in the frame see Fig.2, this corresponds to the two frequencies that have the highest amplitude. The main reason for the use of periodogram for the feature extraction was the ease that peaks can be identified in a two dimensional graph. This information along with the mean value and standard deviation is stored in an array. This is then done for the next frame and so on until the entire sound file has been analyzed as can be seen in Fig.3. This array is then exported as a csv file that will be used in the CBR program. To create the case library for the CBR several sound files of different birds are analyzed and exported into csv files.
+\section{Feature extraction}
+Periodogram was used to step through the sound file one frame at a time and
+then get the frequencies and corresponding amplitude in each frame. This was
+done using matlab, the sound file is first loaded into the program and the
+frame size is set depending on the length of the sound file, the step size
+is preset. After that the program basically uses the “Periodogram” function
+already present in matlab to create a periodogram of the frame illustrated in
+Fig.1. After that the “Findpeak” function is used to find the two highest
+peaks in the frame see Fig.2, this corresponds to the two frequencies that have
+the highest amplitude. The main reason for the use of periodogram for the
+feature extraction was the ease that peaks can be identified in a two
+dimensional graph. This information along with the mean value and standard
+deviation is stored in an array. This is then done for the next frame and
+so on until the entire sound file has been analyzed as can be seen in Fig.3.
+This array is then exported as a csv file that will be used in the CBR program.
+To create the case library for the CBR several sound files of different birds
+are analyzed and exported into csv files.
 
-CBR
-The files created with the Periodogram are then put where the CBR can find them. Before the CBR can be run, the frames that are to be tested have to be speciefied, the program will then compare the features in this frame to the cases that are already in the library. The features which are relevant for the program are the two frequencies with the highest amplitude, in this case it the decibel value is the amplitude. The program will use the KNN (K-nearest neighbour) algorithm to determine which bird made the sound. Several different similarity functions have been tried and for this program Euclidian distance gave the best performance. Only two features is usually not enough to get a robust algorithm, so the program will need another frame from the same source and will also run this through the KNN algorithm. The results from the two frames are then compared and the the class with the most neighbours from both of the frames is chosen see Fig.4.
+\section{Case matching algorithm}
+The files created with the Periodogram are then put where the CBR can find them.
+Before the CBR can be run, the frames that are to be tested have to be
+speciefied, the program will then compare the features in this frame to the
+cases that are already in the library. The features which are relevant for
+the program are the two frequencies with the highest amplitude, in this case
+it the decibel value is the amplitude. The program will use the KNN
+(K-nearest neighbour) algorithm to determine which bird made the sound.
+Several different similarity functions have been tried and for this program
+Euclidian distance gave the best performance. Only two features is usually
+not enough to get a robust algorithm, so the program will need another frame
+from the same source and will also run this through the KNN algorithm. The
+results from the two frames are then compared and the the class with the most
+neighbours from both of the frames is chosen see Fig.4.
