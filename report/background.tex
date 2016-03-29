@@ -1,5 +1,5 @@
 \section{Background and related work}
-Robert Gubkar and Michal Kuba from the university of Zilinia in Slovakia
+Robert Gubkar and Michal Kuba \cite{6566278}  from the university of Zilinia in Slovakia
 conducted a study about comparision of audio features for elementary sound
 based audio classification. They compared two sets of audio features for classification
 of various sonds such as applause, crying, laugh, music, noise and speech.
@@ -8,3 +8,16 @@ their first and seconds order time derivaties. The seconds set consists of line
 spectral frequencies, spectral flux and zero crossing rate. Their test shows that
 the second set of features were superior to classical MFCC coefficients for general
 sound patter recognition and comparable for speech recognition.
+
+Jijung Deng et. al.\cite{6138136} created a fingerprinting system based on spectral energy
+structure of the audio signal. Audi fingerprint is a compact unique content-based
+digital signature which is constructed based on features from the audio.
+The used feature extraction method consists of filtering out the audio signal
+to eliminate high-frequency noise and fourier-transform is applied to calculate
+the energy of the subbands. Each subband energy is represented by 2 bits.
+At last a sub-fingerprint of 2*(number of subbands-1) bits in binary form will
+be produced from each frame of audio signal. The usage of inverted file
+indexing technique combined with hash tables increased the speed of retrieval
+process for the matching algorithm. Their preliminary experimental results
+suggest that this method can work well
+in the application of broadcast monitoring.
