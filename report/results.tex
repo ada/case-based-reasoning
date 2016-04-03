@@ -3,3 +3,14 @@ The development of the bird classifier using cased-based reasoning has
 been successful in many ways. The final version met all the initial requirements
 stated at the beginning of the project and the code has a low footprint while
 providing an adequate performance.
+
+The test has showed that it is possable to classify a noisy, different audio strength Bofink compared to a database with no noize and high quality audio sounded birds.
+
+The tests shows that using euclidian and manhattan distance does not yield accurate results.
+Multiple test with canberra distance with different weight configuration have the most accurate result.
+
+List of possable high accuracy configuration.
+This may not be the best configuration beacause it is done by trial and error, but it yields accurate results.
+Config 1: Canberra, FFT Peak 1 Delta, FFT Area Delta.
+Config 2: Canberra, FFT Peak 1.
+Config 3: Canberra, FFT Peak 1, FFT Area Delta.
