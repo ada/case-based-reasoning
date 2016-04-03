@@ -11,6 +11,11 @@ Multiple test with canberra distance with different weight configuration have th
 
 List of possable high accuracy configuration.
 These configurations is found by trial and error and therefore should not be the perfect result.
-Config 1: Canberra, FFT Peak 1 Delta, FFT Area Delta.
-Config 2: Canberra, FFT Peak 1.
-Config 3: Canberra, FFT Peak 1, FFT Area Delta.
+Config 1: Canberra, 1.0 * FFT Peak 1 Delta, 1.0 * FFT Area Delta.
+Config 2: Canberra, 1.0 * FFT Peak 1.
+Config 3: Canberra, 1.0 * FFT Peak 1, 1.0 * FFT Area Delta.
+Config 4: Canberra, 1.0 * FFT Area Delta, 0.2 * FFT Peak 1, 0.1 * FFT Peak 2, 1.0 * FFT Peak 1 Delta
+
+\section{Discussion}
+Config 4 is currently the best mean accuracy over K from 1 to 100.
+Some feature can not act alone. FFT Peak 1 can get high accurcy alone. When FFT Peak 1 is combined with other features the result can get better if the weight is lowered for FFT Peak 1. This conclude that that a dominating feature like FFT Peak 1 may not seem that important. It is important not to get biased for a feature even if that feature alone gives better result than the others.
