@@ -19,6 +19,12 @@ for j = fnames'
         y = y(1:Fs*10);
     end;
     
+    figure;
+    plot(y);
+    xlabel('Time'); 
+    ylabel('Amplitude');
+    pause;
+    
 
     % Convert stereo to mono
     if size(y,2) == 2

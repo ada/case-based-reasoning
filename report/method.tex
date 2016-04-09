@@ -1,31 +1,59 @@
 \section{Method}
-To make a bird recognition program two main parts are needed. First a feature
+To make a bird recognition program two main procedures are required. First a feature
 extraction method that can analyze and extract the desired features from a
-sound file of a bird singing. Secondly a decision making algorithm that can
-take the extracted features and classify which bird that sings in the sound
-file. The method choosen feature extraction was Periodogram (spectral density
-estimation) and CBR (Case Based Reasoning) was used for the decision making,
-CBR was chossen specifically because it’s a tried and true decision making method.
+sound file of a bird singing and secondly a decision making algorithm that can
+take the extracted features and classify a bird. The method choosen feature
+extraction was Periodogram which evalutes the power spectral density of the
+input signal and CBR was used for the classification.
 
-\section{Feature extraction}
-Periodogram was used to step through the sound file one frame at a time and
-then get the frequencies and corresponding amplitude in each frame. This was
-done using matlab, the sound file is first loaded into the program and the
-frame size is set depending on the length of the sound file, the step size
-is preset. After that the program basically uses the “Periodogram” function
-already present in matlab to create a periodogram of the frame illustrated in
-Fig.1. After that the “Findpeak” function is used to find the two highest
-peaks in the frame see Fig.2, this corresponds to the two frequencies that have
-the highest amplitude. The main reason for the use of periodogram for the
-feature extraction was the ease that peaks can be identified in a two
-dimensional graph. This information along with the mean value and standard
-deviation is stored in an array. This is then done for the next frame and
-so on until the entire sound file has been analyzed as can be seen in Fig.3.
-This array is then exported as a csv file that will be used in the CBR program.
-To create the case library for the CBR several sound files of different birds
-are analyzed and exported into csv files.
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.5\textwidth]{feature_tree}
+\caption{Overall approach. Audio signal is the source of all information. The normal lines are transforming data and the dashed lines are the features being used.}
+\label{fig:approach}
+\end{figure}
 
-\section{Case matching algorithm}
+\subsection{Feature extraction}
+Given an audio signal recordning of a bird, it is important for the feature extraction
+procedure to extract unique set of features that can be used for identity recognition.
+In order to achieve this, the Matlabs Periodogram function was used to calculate the power
+spectral density in contemplation of extracting the influential features from the audio signal.
+
+As shown in Figure~\ref{fig:scanningWindow} a window with a predifined
+length scans the original audio signal. The power spectral density of the window
+is calculated and the results are visualized in Figure~\ref{fig:periodogram}.
+The highest peaks from the power spectral density shown in Figure~\ref{fig:periodogram_peaks} were found
+by using the Matlabs FindPeaks function. These peaks are used as features and additional feature extraction shown in Figure~\ref{fig:approach}.
+
+
+\begin{figure}[htp]
+    \subfloat[A window scanning the original audio recording.]{
+      \includegraphics[clip,width=\columnwidth]{audio}
+      \label{fig:scanningWindow}
+    }
+
+    \subfloat[The power spectral density of a single window.]{
+      \includegraphics[clip,width=\columnwidth]{periodogram}
+      \label{fig:periodogram}
+    }
+
+    \subfloat[Peaks with the highest amplitude in the power spectral density.]{
+      \includegraphics[clip,width=\columnwidth]{periodogram_peaks}
+      \label{fig:periodogram_peaks}
+    }
+
+    \subfloat[Stored peaks over time.]{
+      \includegraphics[clip,width=\columnwidth]{peaks_over_time}
+      \label{fig:peaks_over_time}
+    }
+
+    \caption{Feature extraction procedure is devided into three parts.}
+    \label{fig:featureExtraction}
+\end{figure}
+
+
+
+\subsection{Case matching algorithm}
 The files created with the Periodogram are then put where the CBR can find them.
 Before the CBR can be run, the frames that are to be tested have to be
 speciefied, the program will then compare the features in this frame to the
@@ -39,3 +67,17 @@ not enough to get a robust algorithm, so the program will need another frame
 from the same source and will also run this through the KNN algorithm. The
 results from the two frames are then compared and the the class with the most
 neighbours from both of the frames is chosen see Fig.4.
+
+\begin{figure}[htp]
+    \subfloat[Two samples evaluates to four black and four gray. The probobility of being the black or white class is 50.
+    It is likily that this is not good samples or this can also be pervieved as listening to two different birds at the same time.]{
+      \includegraphics[clip,width=\columnwidth]{knna}
+    }
+
+    \subfloat[Three samples evaluates to seven black and five gray. The probobility to being the black class is over 50.]{
+      \includegraphics[clip,width=\columnwidth]{knnb}
+    }
+
+    \caption{This shows how more samples can increase the accuracy. kNN evaluation where k = 4. Evaluates to the class which has the greater number of class inside the circle.}
+    \label{fig:featureExtraction}
+\end{figure}
