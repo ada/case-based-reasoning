@@ -1,10 +1,30 @@
 \section{Introduction}
-Bird song classification is not only useful for enthusiastic bird watchers. It contributes to research fields such as ornithology and ecology \cite{7418412}, for example conservatory planning  \cite{5360230} and the understanding of how climate change affects bird populations \cite{7418412}. It is also useful for preventing plane crashes caused by collisions with birds  \cite{5360230}.
+Bird song classification is not only useful for enthusiastic bird watchers.
+It contributes to research fields such as ornithology and ecology \cite{7418412},
+for example conservatory planning  \cite{5360230} and the understanding of
+how climate change affects bird populations \cite{7418412}.
+It is also useful for preventing plane crashes caused by collisions with birds  \cite{5360230}.
 
-Singing serves different purposes for birds. For example identify individuals and kinship, threaten rivals and choose partner  \cite{7073944}. Just like human speech, bird song have a grammar and are built on syllables \cite{5360230}. Some birds hide and therefore sound is the only way for humans to know their presence. Study of birds by audio recording is less invasive than humans present in the nature \cite{6123334}.
+Singing serves different purposes for birds. For example identify
+individuals and kinship, threaten rivals and choose partner  \cite{7073944}.
+Just like human speech, bird song have a grammar and are built on syllables \cite{5360230}.
+Some birds hide and therefore sound is the only way for humans to know their presence.
+Study of birds by audio recording is less invasive than humans present in the nature \cite{6123334}.
 
-Since automated bird song classification can be more efficient and accurate than manual, research has been done. One of the challenge is that the recordings are naturally noisy and can contain sound from many individuals at the same time  \cite{7073944}. Extraction of useful features is crucial \cite{5360230}, as well as the selection of classification algorithm.
+Since automated bird song classification can be more efficient and accurate than manual,
+research has been done. One of the challenge is that the recordings are naturally
+noisy and can contain sound from many individuals at the same time  \cite{7073944}.
+Extraction of useful features is crucial \cite{5360230}, as well as the selection
+of classification algorithm.
 
-We have developed an application for audio-based bird specie classification, and this reports describes our project. To contribute with new insights to the research, we decided to use Case-based reasoning with k Nearest Neighbor (kNN) as a classifier and periodograms of short frames of the recordings as the feature extraction method. The motivation is that since the choice of features and classifier algorithm is crucial, we want to explore combinations there are little or no written research about. Our goal is that the application should have high accuracy without requiring much processing time.
+This paper presents the development of audio-based bird specie classification
+using Case-based reasoning (CBR) \textit{K} Nearest Neighbor (kNN) as well as
+extracting features from audio recordings of several birds including: Bluethroat,
+Bluethroat2, Chaffinch, Wood Warbler, Cuckoo, Blackbird, Nightingale, Redbreast and Great Tit.
 
-Section 2 in this report describes the background and related work. In section 3, we present our method. Section 4 shows the result of our project and section 5 gives a summary with conclusions and suggests future work.
+After creating the database and the classifier, an additional audio recording
+of a bluethroat bird (called bluethroat2) has been added and validated against the database.
+
+Section two describes the background and related works on CBR, feature extraction and audio fingerprinting.
+Section three contains the detailed implementation of feature extraction and kNN. Experimental
+result on different feature sets are listed in section IV.
