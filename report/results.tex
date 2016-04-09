@@ -7,65 +7,92 @@ providing an adequate performance.
 
 
 \begin{figure}[htp]
-    \subfloat[]{
-      \includegraphics[clip,width=\columnwidth]{eval-canberra-0_0-0_0-0_0-0_0-1_0-0_0-0_0-0_0}
+    \subfloat[Canberra. \fontfamily{qcr}\selectfont \newline 1.0 * FFT Peak 1]{
+      \includegraphics[clip,width=0.4\columnwidth]{eval-canberra-0_0-0_0-1_0-0_0-0_0-0_0-0_0-0_0}
     }
+    ~
+    \subfloat[Canberra. \fontfamily{qcr}\selectfont \newline 1.0 * FFT Peak 1 \newline 1.0 * FFT Peak 1 Delta]{
+      \includegraphics[clip,width=0.4\columnwidth]{eval-canberra-0_0-0_0-1_0-0_0-1_0-0_0-0_0-0_0}
+    }
+    \caption{Results. Comparing 127 samples of Bluethroat2 to the case database. Y-axis is the number matches for each bird class.
+    This shows adding FFT Peak 1 Delta does not yield that better result.}
+    \label{fig:results}
+\end{figure}
 
-    \subfloat[]{
-      \includegraphics[clip,width=\columnwidth]{eval-canberra-0_0-0_0-1_0-0_0-0_0-0_0-0_0-0_0}
-    }
+\begin{figure}[htp]
 
-    \subfloat[]{
-      \includegraphics[clip,width=\columnwidth]{eval-canberra-0_0-0_0-1_0-0_0-1_0-0_0-0_0-0_0}
-    }
+  \subfloat[Canberra. \fontfamily{qcr}\selectfont \newline 0.1 * FFT Area Delta. \newline 1.0 * FFT Peak 1 Delta]{
+    \includegraphics[clip,width=0.4\columnwidth]{eval-canberra-0_0-0_1-0_0-0_0-1_0-0_0-0_0-0_0}
+  }
+  ~
+  \subfloat[Canberra. \fontfamily{qcr}\selectfont \newline 1.0 * FFT Area Delta. \newline 1.0 * FFT Peak 1 Delta]{
+    \includegraphics[clip,width=0.4\columnwidth]{eval-canberra-0_0-1_0-0_0-0_0-1_0-0_0-0_0-0_0}
+  }
+    \caption{Results. This shows a good combinations of weight. Note that FFT Peak 1 Delta is very neccery.}
+    \label{fig:results}
+\end{figure}
 
-    \subfloat[]{
-      \includegraphics[clip,width=\columnwidth]{eval-canberra-0_0-0_1-0_0-0_0-1_0-0_0-0_0-0_0}
-    }
 
 
-
-
-    \subfloat[]{
-      \includegraphics[clip,width=\columnwidth]{eval-canberra-0_0-1_0-0_0-0_0-1_0-0_0-0_0-0_0}
+\begin{figure}[htp]
+    \subfloat[Canberra. \fontfamily{qcr}\selectfont \newline 1.0 * FFT Peak 1 Delta]{
+      \includegraphics[clip,width=0.4\columnwidth]{eval-canberra-0_0-0_0-0_0-0_0-1_0-0_0-0_0-0_0}
     }
-    \subfloat[]{
-      \includegraphics[clip,width=\columnwidth]{eval-canberra-0_0-1_0-0_1-0_1-1_0-0_0-0_0-0_0}
-    }
-    \subfloat[]{
-      \includegraphics[clip,width=\columnwidth]{eval-canberra-0_0-1_0-1_0-0_0-0_0-0_0-0_0-0_0}
-    }
-    \subfloat[]{
-      \includegraphics[clip,width=\columnwidth]{eval-canberra-0_0-1_0-1_0-0_0-1_0-0_0-0_0-0_0}
-    }
-    \subfloat[]{
-      \includegraphics[clip,width=\columnwidth]{eval-canberra-1_0-1_0-1_0-1_0-1_0-0_0-0_0-0_0}
-    }
-    \subfloat[]{
-      \includegraphics[clip,width=\columnwidth]{eval-canberra-1_0-1_0-1_0-1_0-1_0-1_0-1_0-1_0}
-    }
-    \subfloat[]{
-      \includegraphics[clip,width=\columnwidth]{eval-euclidean-1_0-1_0-1_0-1_0-1_0-0_0-0_0-0_0}
-    }
-    \subfloat[]{
-      \includegraphics[clip,width=\columnwidth]{eval-euclidean-1_0-1_0-1_0-1_0-1_0-1_0-1_0-0_0}
-    }
-    \subfloat[]{
-      \includegraphics[clip,width=\columnwidth]{eval-euclidean-1_0-1_0-1_0-1_0-1_0-1_0-1_0-1_0}
-    }
-    \subfloat[]{
-      \includegraphics[clip,width=\columnwidth]{eval-manhattan-1_0-1_0-1_0-1_0-1_0-0_0-0_0-0_0}
-    }
-
-    \caption{Results.}
+    \caption{Results. Note that FFT Peak 1 Delta alone does not yield acceptable result.}
     \label{fig:results}
 \end{figure}
 
 
 
 
+\begin{figure}[htp]
+    \subfloat[Canberra. \fontfamily{qcr}\selectfont \newline 1.0 * FFT Area Delta \newline 0.1 * FFT Peak 1]{
+      \includegraphics[clip,width=0.4\columnwidth]{eval-canberra-0_0-1_0-0_1-0_1-1_0-0_0-0_0-0_0}
+    }
+    ~
+    \subfloat[Canberra. \fontfamily{qcr}\selectfont \newline 1.0 * FFT Area Delta \newline 1.0 * FFT Peak 1]{
+      \includegraphics[clip,width=0.4\columnwidth]{eval-canberra-0_0-1_0-1_0-0_0-0_0-0_0-0_0-0_0}
+    }
+
+    \subfloat[Canberra. \fontfamily{qcr}\selectfont \newline 1.0 * FFT Area Delta \newline 1.0 * FFT Peak 1  \newline 1.0 * Peak 1 Delta]{
+      \includegraphics[clip,width=0.4\columnwidth]{eval-canberra-0_0-1_0-1_0-0_0-1_0-0_0-0_0-0_0}
+    }
+    \caption{Results.}
+    \label{fig:results}
+\end{figure}
 
 
+\begin{figure}[htp]
+    \subfloat[Canberra. \fontfamily{qcr}\selectfont \newline 1.0 * FFT Area \newline 1.0 * FFT Area Delta \newline 1.0 * Peak 1 \newline 1.0 * Peak 2 \newline 1.0 * Peak 1 Delta]{
+       \includegraphics[clip,width=0.4\columnwidth]{eval-canberra-1_0-1_0-1_0-1_0-1_0-0_0-0_0-0_0}
+    }
+    ~
+    \subfloat[Euclidean. \fontfamily{qcr}\selectfont \newline 1.0 * FFT Area \newline 1.0 * FFT Area Delta \newline 1.0 * Peak 1 \newline 1.0 * Peak 2 \newline 1.0 * Peak 1 Delta]{
+      \includegraphics[clip,width=0.4\columnwidth]{eval-euclidean-1_0-1_0-1_0-1_0-1_0-0_0-0_0-0_0}
+    }
+
+    \subfloat[Euclidean. \fontfamily{qcr}\selectfont \newline 1.0 * FFT Area \newline 1.0 * FFT Area Delta \newline 1.0 * Peak 1 \newline 1.0 * Peak 2 \newline 1.0 * Peak 1 Delta \newline 1.0 * Mean \newline 1.0 * STD]{
+      \includegraphics[clip,width=0.4\columnwidth]{eval-euclidean-1_0-1_0-1_0-1_0-1_0-1_0-1_0-0_0}
+    }
+    \caption{Results.}
+    \label{fig:results}
+\end{figure}
+
+\begin{figure}[htp]
+    \subfloat[Euclidean. \fontfamily{qcr}\selectfont \newline 1.0 * FFT Area \newline 1.0 * FFT Area Delta \newline 1.0 * Peak 1 \newline 1.0 * Peak 2 \newline 1.0 * Peak 1 Delta \newline 1.0 * Mean \newline 1.0 * STD \newline 1.0 * ZCR]{
+      \includegraphics[clip,width=0.4\columnwidth]{eval-euclidean-1_0-1_0-1_0-1_0-1_0-1_0-1_0-1_0}
+    }
+    ~
+    \subfloat[Canberra. \fontfamily{qcr}\selectfont \newline 1.0 * FFT Area \newline 1.0 * FFT Area Delta \newline 1.0 * Peak 1 \newline 1.0 * Peak 2 \newline 1.0 * Peak 1 Delta \newline 1.0 * Mean \newline 1.0 * STD \newline 1.0 * ZCR]{
+      \includegraphics[clip,width=0.4\columnwidth]{eval-canberra-1_0-1_0-1_0-1_0-1_0-1_0-1_0-1_0}
+    }
+
+    \subfloat[Manhattan. \fontfamily{qcr}\selectfont \newline 1.0 * FFT Area \newline 1.0 * FFT Area Delta \newline 1.0 * Peak 1 \newline 1.0 * Peak 2 \newline 1.0 * Peak 1 Delta]{
+      \includegraphics[clip,width=0.4\columnwidth]{eval-manhattan-1_0-1_0-1_0-1_0-1_0-0_0-0_0-0_0}
+    }
+    \caption{Results.}
+    \label{fig:results}
+\end{figure}
 
 The test has showed that it is possable to classify a noisy, different audio strength Bofink compared to a database with no noize and high quality audio sounded birds.
 
