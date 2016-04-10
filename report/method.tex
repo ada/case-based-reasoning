@@ -59,25 +59,15 @@ The class and the features
 (Class, FFT Area, FFT Area Delta, FFT Peak 1, FFT Peak 2, FFT Peak 1 Delta, Mean, STD, ZCR)
 are stored row-wise in a file. This will be the database of cases.
 The class Bluethroat2 is removed from the database and put into another file, that will be the sample file.
-Then each sample are compared with the database with a distance functions (Eeucledian, Manhattan, Canberra).
 
-The files created with the Periodogram are then put where the CBR can find them.
-Before the CBR can be run, the frames that are to be tested have to be
-speciefied, the program will then compare the features in this frame to the
-cases that are already in the library. The features which are relevant for
-the program are the two frequencies with the highest amplitude, in this case
-it the decibel value is the amplitude. The program will use the KNN
-(K-nearest neighbour) algorithm to determine which bird made the sound.
-Several different similarity functions have been tried and for this program
-Euclidian distance gave the best performance. Only two features is usually
-not enough to get a robust algorithm, so the program will need another frame
-from the same source and will also run this through the KNN algorithm. The
-results from the two frames are then compared and the the class with the most
-neighbours from both of the frames is chosen see Fig.4.
+The input of kNN is the database features, sample features, k value, distance type, wieghts.
+Each sample features are compared with the database using a distance function (Eeucledian, Manhattan, Canberra).
+The output of kNN is the estimated class.
+If there is a equal amount of class inside the circle it will output unknown class.
 
 \begin{figure}[htp]
     \subfloat[Two samples evaluates to four black and four gray. The probobility of being the black or white class is 50.
-    It is likily that this is not good samples or this can also be pervieved as listening to two different birds at the same time.]{
+    It is likily that this is unknown class. A unkown class can be pervieved as either noisy sample or listening to more than one type of bird at the same time.]{
       \includegraphics[clip,width=\columnwidth]{knna}
     }
 
