@@ -2,8 +2,8 @@
 To make a bird recognition program two main procedures are required. First a feature
 extraction method that can analyze and extract the desired features from a
 sound file of a bird singing and secondly a decision making algorithm that can
-take the extracted features and classify a bird. The method choosen feature
-extraction was Periodogram which evalutes the power spectral density of the
+take the extracted features and classify a bird. The method chosen for  feature
+extraction was Periodogram which evaluates the power spectral density of the
 input signal and CBR was used for the classification.
 
 \begin{figure}[h]
@@ -14,12 +14,12 @@ input signal and CBR was used for the classification.
 \end{figure}
 
 \subsection{Feature extraction}
-Given an audio signal recordning of a bird, it is important for the feature extraction
+Given an audio signal recording of a bird, it is important for the feature extraction
 procedure to extract unique set of features that can be used for identity recognition.
 In order to achieve this, the Matlabs Periodogram function was used to calculate the power
 spectral density in contemplation of extracting the influential features from the audio signal.
 
-As shown in Figure~\ref{fig:scanningWindow} a window with a predifined
+As shown in Figure~\ref{fig:scanningWindow} a window with a predefined
 length scans the original audio signal. The power spectral density of the window
 is calculated and the results are visualized in Figure~\ref{fig:periodogram}.
 The highest peaks from the power spectral density shown in Figure~\ref{fig:periodogram_peaks} were found
@@ -48,7 +48,7 @@ The described procedure is repeated for each audio recording file.
       \label{fig:peaks_over_time}
     }
 
-    \caption{Feature extraction procedure is devided into three parts.}
+    \caption{Feature extraction procedure is divided into three parts.}
     \label{fig:featureExtraction}
 \end{figure}
 
@@ -58,20 +58,20 @@ The described procedure is repeated for each audio recording file.
 The class and the features
 (Class, FFT Area, FFT Area Delta, FFT Peak 1, FFT Peak 2, FFT Peak 1 Delta, Mean, STD, ZCR)
 are stored row-wise in a file. This will be the database of cases.
-The class Bluethroat2 is removed from the database and put into another file, that will be the sample file.
+The class Bluethroat 2 is removed from the database and put into another file, that will be the sample file.
 
-The input of kNN is the database features, sample features, k value, distance type, wieghts.
-Each sample features are compared with the database using a distance function (Eeucledian, Manhattan, Canberra).
+The input of kNN is the database features, sample features, k value, distance type, weights.
+Each sample features are compared with the database using a distance function (Euclidean, Manhattan, Canberra).
 The output of kNN is the estimated class.
 If there is a equal amount of class inside the circle it will output unknown class.
 
 \begin{figure}[htp]
-    \subfloat[Two samples evaluates to four black and four gray. The probobility of being the black or white class is 50.
-    It is likily that this is unknown class. A unkown class can be pervieved as either noisy sample or listening to more than one type of bird at the same time.]{
+    \subfloat[Two samples evaluates to four black and four gray. The probability of being the black or white class is 50.
+    It is likely that this is unknown class. An unknown class can be provided as either noisy sample or listening to more than one type of bird at the same time.]{
       \includegraphics[clip,width=\columnwidth]{knna}
     }
 
-    \subfloat[Three samples evaluates to seven black and five gray. The probobility to being the black class is over 50.]{
+    \subfloat[Three samples evaluates to seven black and five gray. The probability to being the black class is over 50.]{
       \includegraphics[clip,width=\columnwidth]{knnb}
     }
 
